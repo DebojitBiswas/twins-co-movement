@@ -1,0 +1,271 @@
+SYNTHETIC GRU-sim closed loop (24 cells): rel. error range 1.03 - 1.27 | spread range 0.01 - 0.17 | error/spread 7 - 80
+SYNTHETIC GRU-sim designed data N=2e3/2e4/2e5: [0.44, 0.23, 0.1]
+LAW collapse (28 cells): GRU vs truth median 1.13 vs law 0.2 | OE vs truth 0.95 vs law 0.16
+FAMILIES gru_sim: designed 0.14 closed(d0.8) 1.05
+FAMILIES gru_1s: designed 0.11 closed(d0.8) 1.04
+FAMILIES tf_1s: designed 0.22 closed(d0.8) 1.18
+PLANNING synthetic: closed-loop plans worse than doing nothing (3.0 K): 29 / 36 (sim-GRU) 22 / 24 (1-step families); planner on true plant 0.17 K
+CAPACITY open: {8: (np.float64(1.761), np.float64(5.65)), 16: (np.float64(1.672), np.float64(1.16)), 32: (np.float64(1.651), np.float64(0.15)), 64: (np.float64(1.632), np.float64(0.11)), 128: (np.float64(1.613), np.float64(0.09)), 256: (np.float64(1.658), np.float64(0.09))}
+CAPACITY closed: {8: (np.float64(0.173), np.float64(1.05)), 16: (np.float64(0.16), np.float64(1.07)), 32: (np.float64(0.157), np.float64(1.07)), 64: (np.float64(0.169), np.float64(1.05)), 128: (np.float64(0.156), np.float64(1.07)), 256: (np.float64(0.155), np.float64(1.07))}
+PANCREAS d=0.0 n=9: twin 2-h effect positive in 0 / 9 | true mean -10.9 twin mean -8.7 | 4-h CV true 0.61 twin 0.22
+PANCREAS d=0.7 n=10: twin 2-h effect positive in 10 / 10 | true mean -10.2 twin mean 8.0 | 4-h CV true 0.64 twin 2.87
+DOSING IV twin (dither) d=0.0 : mean dose 3.4 severe 0 / 9 no-dose 2
+DOSING IV twin (dither) d=0.7 : mean dose 6.7 severe 0 / 9 no-dose 0
+DOSING operational twin d=0.0 : mean dose 9.3 severe 3 / 9 no-dose 0
+DOSING operational twin d=0.7 : mean dose 4.4 severe 3 / 10 no-dose 5
+DOSING true (designed-data reference) : mean dose 4.8 severe 0 / 10 no-dose 0
+BUILDING heat pump: persistence 1.7 / 2.15
+  gru_sim  designed_A0.0_s0     do-RMSE 1.10±0.07 / 0.99±0.13  step24h 2.56
+  gru_sim  designed_A0.0_s1     do-RMSE 0.95±0.06 / 1.01±0.09  step24h 2.67
+  gru_sim  dither_A0.5_s0       do-RMSE 3.04±0.09 / 5.04±0.09  step24h 1.20
+  gru_sim  dither_A1.0_s0       do-RMSE 2.57±0.01 / 4.47±0.04  step24h 1.42
+  gru_sim  dither_A2.0_s0       do-RMSE 2.22±0.19 / 3.91±0.21  step24h 2.09
+  gru_sim  operational_A0.0_s0  do-RMSE 3.53±0.04 / 5.67±0.05  step24h 0.49
+  tf_1s    designed_A0.0_s0     do-RMSE 0.63±0.08 / 0.59±0.10  step24h 2.22
+  tf_1s    designed_A0.0_s1     do-RMSE 0.75±0.15 / 0.61±0.11  step24h 2.13
+  tf_1s    dither_A0.5_s0       do-RMSE 2.38±0.26 / 3.35±0.66  step24h 1.42
+  tf_1s    dither_A1.0_s0       do-RMSE 2.20±0.19 / 3.09±0.66  step24h 1.47
+  tf_1s    dither_A2.0_s0       do-RMSE 1.92±0.08 / 2.53±0.27  step24h 1.97
+  tf_1s    operational_A0.0_s0  do-RMSE 2.33±0.28 / 3.18±0.48  step24h 1.06
+  PLANNING embedded controller 0.55 K
+  plan gru_sim  designed_A0.0_s0        -> emulator 1.01±0.02 K, believed 0.90
+  plan gru_sim  dither_A0.5_s0          -> emulator 1.21±0.15 K, believed 0.48
+  plan gru_sim  dither_A0.5_s0       IV -> emulator 2.72±0.25 K, believed 0.40
+  plan gru_sim  dither_A1.0_s0          -> emulator 0.79±0.06 K, believed 0.47
+  plan gru_sim  dither_A1.0_s0       IV -> emulator 2.81±0.13 K, believed 0.37
+  plan gru_sim  dither_A2.0_s0          -> emulator 0.67±0.04 K, believed 0.47
+  plan gru_sim  dither_A2.0_s0       IV -> emulator 1.81±0.16 K, believed 0.40
+  plan gru_sim  operational_A0.0_s0     -> emulator 2.43±0.26 K, believed 0.65
+  plan tf_1s    designed_A0.0_s0        -> emulator 0.96±0.05 K, believed 0.64
+  plan tf_1s    dither_A0.5_s0          -> emulator 1.23±0.09 K, believed 0.43
+  plan tf_1s    dither_A0.5_s0       IV -> emulator 3.09±0.20 K, believed 0.48
+  plan tf_1s    dither_A1.0_s0          -> emulator 0.87±0.08 K, believed 0.41
+  plan tf_1s    dither_A1.0_s0       IV -> emulator 2.81±0.15 K, believed 0.36
+  plan tf_1s    dither_A2.0_s0          -> emulator 0.70±0.06 K, believed 0.43
+  plan tf_1s    dither_A2.0_s0       IV -> emulator 2.32±0.19 K, believed 0.36
+  plan tf_1s    operational_A0.0_s0     -> emulator 2.98±0.26 K, believed 0.46
+  CHRONOS zero-shot                do-RMSE 1.55 / 2.26  pred-op 0.37  step24h 0.02
+  CHRONOS ft:operational_A0.0_s0   do-RMSE 1.72 / 2.42  pred-op 0.15  step24h 0.02
+  CHRONOS ft:designed_A0.0_s0      do-RMSE 0.73 / 1.00  pred-op 0.52  step24h 0.44
+  CHRONOS ft:dither_A1.0_s0        do-RMSE 1.79 / 2.79  pred-op 0.22  step24h 0.28
+  CHRONOS ft:dither_A2.0_s0        do-RMSE 1.64 / 2.65  pred-op 0.23  step24h 0.28
+  CONFORMAL operational: coverage op-test 0.8 - 1.0 | designed test 0.0 - 0.05
+  CONFORMAL designed: coverage op-test 0.29 - 1.0 | designed test 0.15 - 0.6
+  WHAT-IF A (effect 0.83 K): {'CL': (np.float64(0.59), np.float64(0.46)), 'AC+CT': (np.float64(0.63), np.float64(0.59)), 'persist': (np.float64(1.04), None)}
+  WHAT-IF B (effect 0.50 K): {'AC': (np.float64(0.41), np.float64(0.64)), 'CL': (np.float64(0.59), np.float64(1.0)), 'AC+CT': (np.float64(0.4), np.float64(0.66)), 'persist': (np.float64(0.93), None)}
+BUILDING commercial: persistence 1.36 / 0.9
+  gru_sim  designed_A0.0_s0     do-RMSE 0.38±0.02 / 0.42±0.03  step24h 0.26
+  gru_sim  designed_A0.0_s1     do-RMSE 0.42±0.02 / 0.53±0.03  step24h 0.38
+  gru_sim  dither_A0.5_s0       do-RMSE 1.87±0.10 / 1.86±0.07  step24h 1.09
+  gru_sim  dither_A1.0_s0       do-RMSE 1.47±0.06 / 1.66±0.12  step24h 0.62
+  gru_sim  dither_A2.0_s0       do-RMSE 1.39±0.12 / 1.41±0.11  step24h 0.46
+  gru_sim  operational_A0.0_s0  do-RMSE 2.59±0.02 / 2.57±0.10  step24h 1.18
+  tf_1s    designed_A0.0_s0     do-RMSE 0.41±0.02 / 0.40±0.01  step24h 0.24
+  tf_1s    designed_A0.0_s1     do-RMSE 0.40±0.02 / 0.37±0.03  step24h 0.26
+  tf_1s    dither_A0.5_s0       do-RMSE 1.59±0.03 / 1.70±0.04  step24h 0.55
+  tf_1s    dither_A1.0_s0       do-RMSE 1.36±0.05 / 1.49±0.05  step24h 0.72
+  tf_1s    dither_A2.0_s0       do-RMSE 1.38±0.07 / 1.51±0.08  step24h 0.71
+  tf_1s    operational_A0.0_s0  do-RMSE 2.21±0.07 / 2.52±0.07  step24h 0.11
+  CHRONOS zero-shot                do-RMSE 0.81 / 1.00  pred-op 1.16  step24h 0.26
+  CHRONOS ft:operational_A0.0_s0   do-RMSE 0.75 / 0.93  pred-op 0.21  step24h 0.62
+  CHRONOS ft:designed_A0.0_s0      do-RMSE 0.53 / 0.76  pred-op 1.00  step24h 0.06
+  CHRONOS ft:dither_A1.0_s0        do-RMSE 0.66 / 0.83  pred-op 0.27  step24h 0.64
+  CHRONOS ft:dither_A2.0_s0        do-RMSE 0.63 / 0.78  pred-op 0.28  step24h 0.68
+V1 P1 gru_sim      designed    : in-RMSE 1.27 (pers from summary) step ratio 1.04 [0.96,1.14] n=10 cov op/in 0.81/0.90
+V1 P1 gru_sim      dither ±2 K (3 logs): step ratio 0.67–0.74, in-RMSE 0.38–0.51
+V1 P1 gru_sim_big  operational : in-RMSE 0.91 (pers from summary) step ratio 0.19 [0.16,0.24] n=3 cov op/in 0.82/0.40
+V1 P1 gru_sim_big  designed    : in-RMSE 1.58 (pers from summary) step ratio 0.86 [0.70,1.04] n=3 cov op/in 0.92/0.93
+V1 P1 gru_sim_big  dither ±2 K (3 logs): step ratio 0.72–0.72, in-RMSE 0.57–0.57
+V1 P1 gru_1s       operational : in-RMSE 3.50 (pers from summary) step ratio 2.17 [1.01,3.48] n=5 cov op/in 0.93/0.75
+V1 P1 gru_1s       designed    : in-RMSE 1.19 (pers from summary) step ratio 1.09 [0.91,1.26] n=10 cov op/in 0.86/0.92
+V1 P1 gru_1s       dither ±2 K (3 logs): step ratio 1.44–1.72, in-RMSE 0.78–1.02
+V1 P1 tf_1s        operational : in-RMSE 1.11 (pers from summary) step ratio 0.78 [0.65,0.94] n=5 cov op/in 0.90/0.81
+V1 P1 tf_1s        designed    : in-RMSE 0.96 (pers from summary) step ratio 0.98 [0.86,1.08] n=10 cov op/in 0.76/0.91
+V1 P1 tf_1s        dither ±2 K (3 logs): step ratio 0.65–0.81, in-RMSE 0.64–0.95
+V1 P1 arx48        operational : in-RMSE 0.75 (pers from summary) step ratio 1.40 [1.29,1.56] n=1 cov op/in 0.66/0.88
+V1 P1 arx48        designed    : in-RMSE 1.07 (pers from summary) step ratio 1.04 [0.96,1.16] n=2 cov op/in 0.69/0.96
+V1 P1 arx48        dither ±2 K (3 logs): step ratio 0.83–0.87, in-RMSE 0.42–0.47
+V1 P1 pem2         operational : in-RMSE 1.26 (pers from summary) step ratio 1.64 [1.50,1.82] n=1 cov op/in 0.91/0.84
+V1 P1 pem2         designed    : in-RMSE 0.80 (pers from summary) step ratio 1.38 [1.27,1.54] n=2 cov op/in 0.62/0.81
+V1 P1 pem2         dither ±2 K (3 logs): step ratio 1.01–1.12, in-RMSE 0.98–1.20
+V1 P1 grey         operational : in-RMSE 1.10 (pers from summary) step ratio 0.29 [0.27,0.32] n=1 cov op/in 0.73/0.77
+V1 P1 grey         designed    : in-RMSE 1.88 (pers from summary) step ratio 0.49 [0.37,0.63] n=2 cov op/in 0.78/0.98
+V1 P1 grey         dither ±2 K (3 logs): step ratio 0.09–0.24, in-RMSE 0.91–1.55
+V1 P2 gru_sim      operational : in-RMSE 1.99 (pers from summary) step ratio 0.14 [0.08,0.20] n=5 cov op/in 0.87/0.65
+V1 P2 gru_sim      designed    : in-RMSE 1.37 (pers from summary) step ratio 1.06 [0.99,1.11] n=10 cov op/in 0.68/0.95
+V1 P2 gru_sim      dither ±2 K (3 logs): step ratio 0.55–0.63, in-RMSE 1.36–1.40
+V1 P2 gru_sim_big  operational : in-RMSE 2.20 (pers from summary) step ratio 0.21 [0.16,0.26] n=2 cov op/in 0.92/0.66
+V1 P2 gru_sim_big  designed    : in-RMSE 1.22 (pers from summary) step ratio 1.03 [0.97,1.07] n=2 cov op/in 0.74/0.99
+V1 P2 gru_1s       operational : in-RMSE 2.02 (pers from summary) step ratio 2.75 [1.90,3.71] n=5 cov op/in 0.83/0.71
+V1 P2 gru_1s       designed    : in-RMSE 1.38 (pers from summary) step ratio 1.14 [0.85,1.43] n=10 cov op/in 0.78/0.94
+V1 P2 gru_1s       dither ±2 K (3 logs): step ratio 1.74–2.16, in-RMSE 1.52–1.95
+V1 P2 tf_1s        operational : in-RMSE 2.03 (pers from summary) step ratio 0.63 [0.44,0.87] n=5 cov op/in 0.98/0.80
+V1 P2 tf_1s        designed    : in-RMSE 0.94 (pers from summary) step ratio 1.02 [0.61,1.42] n=10 cov op/in 0.82/0.99
+V1 P2 tf_1s        dither ±2 K (3 logs): step ratio 0.45–0.77, in-RMSE 1.70–2.18
+V1 P2 arx48        operational : in-RMSE 0.86 (pers from summary) step ratio 1.11 [1.01,1.22] n=1 cov op/in 0.61/0.90
+V1 P2 arx48        designed    : in-RMSE 1.26 (pers from summary) step ratio 1.10 [1.00,1.20] n=2 cov op/in 0.55/0.95
+V1 P2 arx48        dither ±2 K (3 logs): step ratio 0.82–0.83, in-RMSE 0.96–1.14
+V1 P2 pem2         operational : in-RMSE 0.71 (pers from summary) step ratio 1.65 [1.51,1.80] n=1 cov op/in 0.46/0.80
+V1 P2 pem2         designed    : in-RMSE 1.04 (pers from summary) step ratio 1.47 [1.35,1.61] n=2 cov op/in 0.55/0.89
+V1 P2 pem2         dither ±2 K (3 logs): step ratio 0.94–1.05, in-RMSE 1.08–1.35
+V1 P2 grey         operational : in-RMSE 1.06 (pers from summary) step ratio 0.51 [0.47,0.56] n=1 cov op/in 0.94/0.98
+V1 P2 grey         designed    : in-RMSE 2.52 (pers from summary) step ratio 0.08 [0.00,0.16] n=2 cov op/in 0.55/0.93
+V1 P2 grey         dither ±2 K (3 logs): step ratio 0.09–0.17, in-RMSE 1.04–1.24
+V1 P3 gru_sim      operational : in-RMSE 1.38 (pers from summary) step ratio 0.28 [0.20,0.41] n=5 cov op/in 0.98/0.27
+V1 P3 gru_sim      designed    : in-RMSE 0.38 (pers from summary) step ratio 1.27 [1.18,1.40] n=10 cov op/in 0.97/0.95
+V1 P3 gru_sim      dither ±2 K (3 logs): step ratio 0.67–0.87, in-RMSE 0.68–1.10
+V1 P3 gru_sim_big  operational : in-RMSE 1.62 (pers from summary) step ratio 0.29 [0.25,0.33] n=2 cov op/in 0.99/0.19
+V1 P3 gru_sim_big  designed    : in-RMSE 0.31 (pers from summary) step ratio 1.27 [1.19,1.34] n=2 cov op/in 0.96/0.92
+V1 P3 gru_1s       operational : in-RMSE 5.79 (pers from summary) step ratio 2.39 [0.95,3.82] n=5 cov op/in 0.99/0.45
+V1 P3 gru_1s       designed    : in-RMSE 0.90 (pers from summary) step ratio 0.79 [0.58,1.00] n=10 cov op/in 0.78/0.74
+V1 P3 gru_1s       dither ±2 K (3 logs): step ratio 0.49–0.96, in-RMSE 1.00–1.37
+V1 P3 tf_1s        operational : in-RMSE 1.34 (pers from summary) step ratio 0.48 [0.40,0.61] n=5 cov op/in 0.88/0.37
+V1 P3 tf_1s        designed    : in-RMSE 1.15 (pers from summary) step ratio 0.75 [0.56,0.89] n=10 cov op/in 0.96/0.83
+V1 P3 tf_1s        dither ±2 K (3 logs): step ratio 0.53–0.65, in-RMSE 0.88–1.30
+V1 P3 arx48        operational : in-RMSE 1.12 (pers from summary) step ratio 0.88 [0.79,0.99] n=1 cov op/in 0.97/0.49
+V1 P3 arx48        designed    : in-RMSE 0.34 (pers from summary) step ratio 1.07 [0.96,1.19] n=2 cov op/in 0.73/0.79
+V1 P3 arx48        dither ±2 K (3 logs): step ratio 0.76–0.86, in-RMSE 0.88–1.01
+V1 P3 pem2         operational : in-RMSE 0.69 (pers from summary) step ratio 1.21 [1.08,1.35] n=1 cov op/in 0.99/0.82
+V1 P3 pem2         designed    : in-RMSE 0.55 (pers from summary) step ratio 1.45 [1.30,1.62] n=2 cov op/in 0.99/0.94
+V1 P3 pem2         dither ±2 K (3 logs): step ratio 0.94–1.06, in-RMSE 0.89–1.01
+V1 P3 grey         operational : in-RMSE 1.30 (pers from summary) step ratio 0.23 [0.20,0.25] n=1 cov op/in 0.77/0.62
+V1 P3 grey         designed    : in-RMSE 1.07 (pers from summary) step ratio 0.21 [0.00,0.44] n=2 cov op/in 0.75/0.89
+V1 P3 grey         dither ±2 K (3 logs): step ratio 0.13–0.24, in-RMSE 1.28–1.56
+C5d clean one-step (d=0): gru_1s s0 0.97, gru_1s s1 0.96, gru_1s s2 0.98, tf_1s s0 1.01, tf_1s s1 1.00, tf_1s s2 14.10, arx20 s0 0.17
+C11b Chronos designed sweep step24h: lr1e-05/1000 0.44K, lr1e-05/5000 0.30K, lr0.0001/1000 0.22K, lr0.0001/5000 0.13K, lr0.001/1000 0.18K, lr0.001/5000 -0.16K; passes: 0
+C7c control-function GRU step24h: dither_A0.5_s0 s0 1.18, dither_A0.5_s0 s1 1.51, dither_A0.5_s0 s2 1.14, dither_A1.0_s0 s0 1.73, dither_A1.0_s0 s1 1.69, dither_A1.0_s0 s2 1.67, dither_A2.0_s0 s0 1.75, dither_A2.0_s0 s1 2.48, dither_A2.0_s0 s2 1.78
+C16 P1 big models operational (pre-rescore, superseded by c18): gru_sim_big s0 0.25, gru_sim_big s1 0.23, gru_sim_big s2 0.26, gru_1s_big s0 0.34, gru_1s_big s1 0.27, tf_1s_big s0 0.73, tf_1s_big s1 1.00
+C18 P1 big models operational (corrected truth): gru_sim_big s0 0.20, gru_sim_big s1 0.18, gru_sim_big s2 0.21, gru_1s_big s0 0.28, gru_1s_big s1 0.22, tf_1s_big s0 0.62, tf_1s_big s1 0.83
+C18 P1 step in-range fraction (first 24 h) base 0.71 interv 0.33
+C18 P1 gru_sim operational fraction by horizon: 3h 0.69, 6h 0.59, 12h 0.40, 24h 0.22, 48h 0.14 | conformal 6-24h op/sched/in-range-masked 0.85/0.52/0.48
+C18 P1 gru_sim_big operational fraction by horizon: 3h 0.63, 6h 0.56, 12h 0.35, 24h 0.19, 48h 0.13 | conformal 6-24h op/sched/in-range-masked 0.82/0.40/0.38
+C18 P1 gru_1s_noise operational fraction by horizon: 3h 0.29, 6h 0.32, 12h 0.05, 24h 0.13, 48h 0.09 | conformal 6-24h op/sched/in-range-masked 0.91/0.63/0.61
+C18 P1 tf_1s operational fraction by horizon: 3h 1.15, 6h 0.73, 12h 0.48, 24h 0.78, 48h 0.65 | conformal 6-24h op/sched/in-range-masked 0.90/0.81/0.80
+C18 P1 tf_1s_noise operational fraction by horizon: 3h 0.15, 6h 0.45, 12h 0.45, 24h 0.36, 48h 0.28 | conformal 6-24h op/sched/in-range-masked 0.83/0.55/0.55
+C18 P1 arx12 operational fraction by horizon: 3h 1.29, 6h 1.37, 12h 1.43, 24h 1.55, 48h 1.43 | conformal 6-24h op/sched/in-range-masked 0.80/0.86/0.89
+C18 P1 arx48 operational fraction by horizon: 3h 1.24, 6h 1.28, 12h 1.31, 24h 1.40, 48h 1.25 | conformal 6-24h op/sched/in-range-masked 0.66/0.88/0.90
+C18 P1 pem2 operational fraction by horizon: 3h 1.29, 6h 1.35, 12h 1.44, 24h 1.64, 48h 1.64 | conformal 6-24h op/sched/in-range-masked 0.91/0.84/0.86
+C18 P1 dither_A0.5_s0: comfort rms 0.31 K, energy +4%, gamma2(u, offset) 0.49, gru_sim frac24 0.51, frac6 1.07
+C18 P1 dither_A1.0_s0: comfort rms 0.56 K, energy +12%, gamma2(u, offset) 0.61, gru_sim frac24 0.56, frac6 1.17
+C18 P1 dither_A2.0_s0: comfort rms 0.89 K, energy +21%, gamma2(u, offset) 0.68, gru_sim frac24 0.74, frac6 1.17
+C18 P1 dither_A2.0_s1: comfort rms 0.93 K, energy +16%, gamma2(u, offset) 0.75, gru_sim frac24 0.71, frac6 1.08
+C18 P1 dither_A2.0_s2: comfort rms 0.93 K, energy +15%, gamma2(u, offset) 0.70, gru_sim frac24 0.67, frac6 1.15
+C22 P1 +0.1 step: truth 6/24/48 h 0.32/0.89/1.41 K, interv arm in range 0.58 (+0.3: 0.33)
+C22 P1 gru_sim operational +0.1 fraction by horizon: 3h 0.74, 6h 0.60, 12h 0.41, 24h 0.26, 48h 0.14; +0.3 24h 0.22
+C22 P1 gru_sim_big operational +0.1 fraction by horizon: 3h 0.70, 6h 0.68, 12h 0.36, 24h 0.20, 48h 0.13; +0.3 24h 0.19
+C22 P1 gru_1s_noise operational +0.1 fraction by horizon: 3h 0.35, 6h 0.27, 12h 0.02, 24h 0.09, 48h 0.05; +0.3 24h 0.13
+C22 P1 tf_1s operational +0.1 fraction by horizon: 3h 1.31, 6h 0.87, 12h 0.55, 24h 0.87, 48h 0.64; +0.3 24h 0.78
+C22 P1 tf_1s_noise operational +0.1 fraction by horizon: 3h 0.02, 6h 0.33, 12h 0.42, 24h 0.24, 48h 0.17; +0.3 24h 0.36
+C22 P1 arx12 operational +0.1 fraction by horizon: 3h 1.25, 6h 1.31, 12h 1.36, 24h 1.48, 48h 1.35; +0.3 24h 1.55
+C22 P1 arx48 operational +0.1 fraction by horizon: 3h 1.21, 6h 1.23, 12h 1.25, 24h 1.33, 48h 1.17; +0.3 24h 1.40
+C22 P1 pem2 operational +0.1 fraction by horizon: 3h 1.26, 6h 1.30, 12h 1.37, 24h 1.56, 48h 1.54; +0.3 24h 1.64
+C21 P1 grey-box OE: log_operational 1.10, log_dither_A2.0_s0 1.34, log_dither_A2.0_s1 0.82, log_dither_A2.0_s2 1.06, log_designed_s0 1.61, log_designed_s1 1.78
+C16 P2 big models operational (pre-rescore, superseded by c18): tf_1s_big s0 0.75, tf_1s_big s1 0.53, gru_sim_big s0 0.19, gru_sim_big s1 0.26
+C18 P2 big models operational (corrected truth): tf_1s_big s0 0.76, tf_1s_big s1 0.50, gru_sim_big s0 0.17, gru_sim_big s1 0.25
+C18 P2 step in-range fraction (first 24 h) base 0.79 interv 0.27
+C18 P2 gru_sim operational fraction by horizon: 3h 0.36, 6h 0.32, 12h 0.33, 24h 0.14, 48h 0.10 | conformal 6-24h op/sched/in-range-masked 0.87/0.65/0.81
+C18 P2 gru_sim_big operational fraction by horizon: 3h 0.57, 6h 0.48, 12h 0.37, 24h 0.21, 48h 0.14 | conformal 6-24h op/sched/in-range-masked 0.92/0.66/0.85
+C18 P2 gru_1s_noise operational fraction by horizon: 3h -0.06, 6h 0.18, 12h 0.08, 24h 0.06, 48h 0.05 | conformal 6-24h op/sched/in-range-masked 0.87/0.58/0.76
+C18 P2 tf_1s operational fraction by horizon: 3h 0.69, 6h 0.51, 12h 0.48, 24h 0.63, 48h 0.75 | conformal 6-24h op/sched/in-range-masked 0.98/0.80/0.98
+C18 P2 tf_1s_noise operational fraction by horizon: 3h -0.01, 6h 0.22, 12h 0.17, 24h 0.15, 48h 0.13 | conformal 6-24h op/sched/in-range-masked 0.87/0.64/0.81
+C18 P2 arx12 operational fraction by horizon: 3h 1.13, 6h 1.15, 12h 1.15, 24h 1.14, 48h 0.95 | conformal 6-24h op/sched/in-range-masked 0.61/0.87/0.93
+C18 P2 arx48 operational fraction by horizon: 3h 1.09, 6h 1.10, 12h 1.10, 24h 1.11, 48h 0.93 | conformal 6-24h op/sched/in-range-masked 0.61/0.90/0.98
+C18 P2 pem2 operational fraction by horizon: 3h 1.17, 6h 1.26, 12h 1.42, 24h 1.65, 48h 1.67 | conformal 6-24h op/sched/in-range-masked 0.46/0.80/0.92
+C18 P2 dither_A2.0_s0: comfort rms 0.94 K, energy +28%, gamma2(u, offset) 0.58, gru_sim frac24 0.63, frac6 1.06
+C18 P2 dither_A2.0_s1: comfort rms 0.90 K, energy +25%, gamma2(u, offset) 0.60, gru_sim frac24 0.55, frac6 0.95
+C18 P2 dither_A2.0_s2: comfort rms 0.90 K, energy +21%, gamma2(u, offset) 0.59, gru_sim frac24 0.63, frac6 1.00
+C22 P2 +0.1 step: truth 6/24/48 h 0.40/1.05/1.63 K, interv arm in range 0.57 (+0.3: 0.27)
+C22 P2 gru_sim operational +0.1 fraction by horizon: 3h 0.42, 6h 0.37, 12h 0.33, 24h 0.15, 48h 0.10; +0.3 24h 0.14
+C22 P2 gru_sim_big operational +0.1 fraction by horizon: 3h 0.59, 6h 0.47, 12h 0.38, 24h 0.21, 48h 0.14; +0.3 24h 0.21
+C22 P2 gru_1s_noise operational +0.1 fraction by horizon: 3h -0.06, 6h 0.16, 12h 0.01, 24h 0.07, 48h 0.09; +0.3 24h 0.06
+C22 P2 tf_1s operational +0.1 fraction by horizon: 3h 0.74, 6h 0.59, 12h 0.52, 24h 0.48, 48h 0.59; +0.3 24h 0.63
+C22 P2 tf_1s_noise operational +0.1 fraction by horizon: 3h -0.05, 6h 0.23, 12h 0.17, 24h 0.10, 48h 0.10; +0.3 24h 0.15
+C22 P2 arx12 operational +0.1 fraction by horizon: 3h 1.09, 6h 1.09, 12h 1.08, 24h 1.07, 48h 0.89; +0.3 24h 1.14
+C22 P2 arx48 operational +0.1 fraction by horizon: 3h 1.05, 6h 1.04, 12h 1.04, 24h 1.05, 48h 0.87; +0.3 24h 1.11
+C22 P2 pem2 operational +0.1 fraction by horizon: 3h 1.13, 6h 1.19, 12h 1.34, 24h 1.56, 48h 1.56; +0.3 24h 1.65
+C21 P2 grey-box OE: log_operational 0.69, log_dither_A2.0_s0 0.82, log_dither_A2.0_s1 0.90, log_dither_A2.0_s2 0.88, log_designed_s0 1.14, log_designed_s1 1.26
+C16 P3 big models operational (pre-rescore, superseded by c18): tf_1s_big s0 0.48, tf_1s_big s1 0.23, gru_sim_big s0 0.37, gru_sim_big s1 0.29
+C18 P3 big models operational (corrected truth): tf_1s_big s0 0.65, tf_1s_big s1 0.30, gru_sim_big s0 0.32, gru_sim_big s1 0.26
+C18 P3 step in-range fraction (first 24 h) base 0.80 interv 0.62
+C18 P3 gru_sim operational fraction by horizon: 3h 0.72, 6h 0.75, 12h 0.59, 24h 0.28, 48h 0.19 | conformal 6-24h op/sched/in-range-masked 0.98/0.27/0.40
+C18 P3 gru_sim_big operational fraction by horizon: 3h 0.83, 6h 0.78, 12h 0.57, 24h 0.29, 48h 0.19 | conformal 6-24h op/sched/in-range-masked 0.99/0.19/0.35
+C18 P3 gru_1s_noise operational fraction by horizon: 3h 0.48, 6h 0.64, 12h 0.32, 24h 0.19, 48h 0.13 | conformal 6-24h op/sched/in-range-masked 0.99/0.24/0.46
+C18 P3 tf_1s operational fraction by horizon: 3h 1.02, 6h 1.06, 12h 0.75, 24h 0.48, 48h 0.32 | conformal 6-24h op/sched/in-range-masked 0.88/0.37/0.56
+C18 P3 tf_1s_noise operational fraction by horizon: 3h 0.35, 6h 0.51, 12h 0.43, 24h 0.22, 48h 0.13 | conformal 6-24h op/sched/in-range-masked 1.00/0.20/0.38
+C18 P3 arx12 operational fraction by horizon: 3h 1.21, 6h 1.17, 12h 1.05, 24h 0.90, 48h 0.70 | conformal 6-24h op/sched/in-range-masked 0.92/0.57/0.64
+C18 P3 arx48 operational fraction by horizon: 3h 1.20, 6h 1.11, 12h 0.99, 24h 0.88, 48h 0.61 | conformal 6-24h op/sched/in-range-masked 0.97/0.49/0.64
+C18 P3 pem2 operational fraction by horizon: 3h 1.17, 6h 1.22, 12h 1.25, 24h 1.21, 48h 1.01 | conformal 6-24h op/sched/in-range-masked 0.99/0.82/0.82
+C18 P3 dither_A2.0_s0: comfort rms 1.01 K, energy +20%, gamma2(u, offset) 0.55, gru_sim frac24 0.67, frac6 1.00
+C18 P3 dither_A2.0_s1: comfort rms 0.95 K, energy +15%, gamma2(u, offset) 0.67, gru_sim frac24 0.87, frac6 0.94
+C18 P3 dither_A2.0_s2: comfort rms 0.94 K, energy +16%, gamma2(u, offset) 0.50, gru_sim frac24 0.70, frac6 0.98
+C22 P3 +0.1 step: truth 6/24/48 h 0.33/0.95/1.48 K, interv arm in range 0.81 (+0.3: 0.62)
+C22 P3 gru_sim operational +0.1 fraction by horizon: 3h 0.86, 6h 0.88, 12h 0.66, 24h 0.36, 48h 0.27; +0.3 24h 0.28
+C22 P3 gru_sim_big operational +0.1 fraction by horizon: 3h 0.92, 6h 0.89, 12h 0.63, 24h 0.32, 48h 0.22; +0.3 24h 0.29
+C22 P3 gru_1s_noise operational +0.1 fraction by horizon: 3h 0.69, 6h 0.70, 12h 0.35, 24h 0.23, 48h 0.15; +0.3 24h 0.19
+C22 P3 tf_1s operational +0.1 fraction by horizon: 3h 1.01, 6h 1.10, 12h 0.84, 24h 0.53, 48h 0.32; +0.3 24h 0.48
+C22 P3 tf_1s_noise operational +0.1 fraction by horizon: 3h 0.82, 6h 0.92, 12h 0.62, 24h 0.29, 48h 0.19; +0.3 24h 0.22
+C22 P3 arx12 operational +0.1 fraction by horizon: 3h 1.17, 6h 1.13, 12h 1.00, 24h 0.85, 48h 0.66; +0.3 24h 0.90
+C22 P3 arx48 operational +0.1 fraction by horizon: 3h 1.15, 6h 1.07, 12h 0.94, 24h 0.84, 48h 0.58; +0.3 24h 0.88
+C22 P3 pem2 operational +0.1 fraction by horizon: 3h 1.13, 6h 1.17, 12h 1.20, 24h 1.14, 48h 0.95; +0.3 24h 1.21
+C21 P3 grey-box OE: log_operational 0.25, log_dither_A2.0_s0 0.69, log_dither_A2.0_s1 0.94, log_dither_A2.0_s2 0.87, log_designed_s0 1.60, log_designed_s1 1.50
+C20b pancreas ARX on regenerated v1 logs d=0.0 (68 cells, 23 patients): lin4 per-patient median ratio 0.42, positive 0/23 patients, finite cells 68/68; arx6_4h per-patient median ratio 6.80, positive 0/23 patients, finite cells 58/68; arx12_4h per-patient median ratio 2.14, positive 1/23 patients, finite cells 63/68; arx24_4h per-patient median ratio 2.54, positive 1/23 patients, finite cells 61/68
+C20b pancreas ARX on regenerated v1 logs d=0.7 (67 cells, 23 patients): lin4 per-patient median ratio 0.10, positive 6/23 patients, finite cells 67/67; arx6_4h per-patient median ratio -0.01, positive 16/23 patients, finite cells 67/67; arx12_4h per-patient median ratio -0.03, positive 13/23 patients, finite cells 67/67; arx24_4h per-patient median ratio -0.05, positive 15/23 patients, finite cells 67/67
+C20c pancreas ARX on DESIGNED logs (25 patients): lin4 median ratio 1.00, finite 25; arx6_4h median ratio 0.20, finite 25; arx12_4h median ratio 0.56, finite 25; arx24_4h median ratio 0.90, finite 25
+C6f dosing on regenerated logs IV twin d=0.0: n=23 dose 5.1 severe 3/23 no-dose 2
+C6f dosing on regenerated logs IV twin d=0.7: n=23 dose 4.3 severe 3/23 no-dose 3
+C6f dosing on regenerated logs operational twin d=0.0: n=23 dose 6.9 severe 12/23 no-dose 0
+C6f dosing on regenerated logs operational twin d=0.7: n=22 dose 6.2 severe 15/22 no-dose 6
+C6f dosing on regenerated logs true effect (at operating point): n=25 dose 2.8 severe 0/25 no-dose 0
+C23 P1 shuffled-day replay arx12: log_shuffled_s0 24h 1.29 6h 1.20 (op err 0.76), log_shuffled_s1 24h 1.23 6h 1.20 (op err 0.80)
+C23 P1 shuffled-day replay arx48: log_shuffled_s0 24h 1.17 6h 1.14 (op err 0.96), log_shuffled_s1 24h 1.09 6h 1.15 (op err 1.01)
+C23 P1 shuffled-day replay gru_1s_noise: log_shuffled_s0 24h 0.87 6h 0.79 (op err 1.08), log_shuffled_s1 24h 0.54 6h 0.86 (op err 1.09)
+C23 P1 shuffled-day replay gru_sim: log_shuffled_s0 24h 1.21 6h 0.88 (op err 0.91), log_shuffled_s1 24h 0.73 6h 0.93 (op err 1.19)
+C23 P1 shuffled-day replay pem2: log_shuffled_s0 24h 1.59 6h 1.34 (op err 0.69), log_shuffled_s1 24h 1.54 6h 1.33 (op err 0.59)
+C23 P1 shuffled-day replay tf_1s: log_shuffled_s0 24h 1.08 6h 0.94 (op err 0.98), log_shuffled_s1 24h 0.96 6h 0.91 (op err 0.68)
+C23 P1 shuffled-day replay tf_1s_noise: log_shuffled_s0 24h 0.78 6h 0.80 (op err 0.82), log_shuffled_s1 24h 0.72 6h 0.84 (op err 1.04)
+C23 P1 strat-day replay arx12: log_strat_s0 24h 1.25 6h 1.20 (op err 0.67), log_strat_s1 24h 1.38 6h 1.24 (op err 0.69)
+C23 P1 strat-day replay arx48: log_strat_s0 24h 1.13 6h 1.10 (op err 0.84), log_strat_s1 24h 1.25 6h 1.15 (op err 0.79)
+C23 P1 strat-day replay gru_1s_noise: log_strat_s0 24h 0.58 6h 0.94 (op err 0.74), log_strat_s1 24h 0.52 6h 0.93 (op err 0.79)
+C23 P1 strat-day replay gru_sim: log_strat_s0 24h 0.99 6h 1.01 (op err 0.58), log_strat_s1 24h 0.85 6h 1.16 (op err 0.86)
+C23 P1 strat-day replay pem2: log_strat_s0 24h 1.47 6h 1.35 (op err 0.60), log_strat_s1 24h 1.66 6h 1.39 (op err 0.62)
+C23 P1 strat-day replay tf_1s: log_strat_s0 24h 0.97 6h 0.91 (op err 0.70), log_strat_s1 24h 1.27 6h 1.06 (op err 0.72)
+C23 P1 strat-day replay tf_1s_noise: log_strat_s0 24h 0.77 6h 0.83 (op err 0.58), log_strat_s1 24h 0.66 6h 0.82 (op err 0.77)
+C23 P2 shuffled-day replay arx12: log_shuffled_s0 24h 1.06 6h 1.06 (op err 1.42), log_shuffled_s1 24h 1.26 6h 1.09 (op err 1.41)
+C23 P2 shuffled-day replay arx48: log_shuffled_s0 24h 1.00 6h 1.07 (op err 1.65), log_shuffled_s1 24h 1.19 6h 1.14 (op err 1.44)
+C23 P2 shuffled-day replay gru_1s_noise: log_shuffled_s0 24h 0.60 6h 0.81 (op err 1.03), log_shuffled_s1 24h 1.01 6h 1.27 (op err 1.17)
+C23 P2 shuffled-day replay gru_sim: log_shuffled_s0 24h 1.07 6h 1.06 (op err 1.05), log_shuffled_s1 24h 1.21 6h 1.04 (op err 1.16)
+C23 P2 shuffled-day replay pem2: log_shuffled_s0 24h 1.60 6h 1.30 (op err 1.00), log_shuffled_s1 24h 1.67 6h 1.27 (op err 1.23)
+C23 P2 shuffled-day replay tf_1s: log_shuffled_s0 24h 1.17 6h 0.81 (op err 1.15), log_shuffled_s1 24h 1.60 6h 1.27 (op err 0.79)
+C23 P2 shuffled-day replay tf_1s_noise: log_shuffled_s0 24h 0.65 6h 0.67 (op err 1.08), log_shuffled_s1 24h 0.66 6h 0.79 (op err 1.06)
+C23 P2 strat-day replay arx12: log_strat_s0 24h 1.08 6h 1.09 (op err 1.13), log_strat_s1 24h 1.19 6h 1.11 (op err 1.23)
+C23 P2 strat-day replay arx48: log_strat_s0 24h 1.11 6h 1.08 (op err 1.23), log_strat_s1 24h 1.10 6h 1.10 (op err 1.34)
+C23 P2 strat-day replay gru_1s_noise: log_strat_s0 24h 0.13 6h 0.88 (op err 0.82), log_strat_s1 24h 0.33 6h 0.97 (op err 0.77)
+C23 P2 strat-day replay gru_sim: log_strat_s0 24h 0.74 6h 1.01 (op err 0.83), log_strat_s1 24h 0.97 6h 0.81 (op err 0.84)
+C23 P2 strat-day replay pem2: log_strat_s0 24h 1.47 6h 1.29 (op err 1.13), log_strat_s1 24h 1.59 6h 1.31 (op err 1.31)
+C23 P2 strat-day replay tf_1s: log_strat_s0 24h 0.91 6h 0.76 (op err 0.90), log_strat_s1 24h 0.84 6h 0.70 (op err 0.75)
+C23 P2 strat-day replay tf_1s_noise: log_strat_s0 24h 0.42 6h 0.69 (op err 0.69), log_strat_s1 24h 0.43 6h 0.49 (op err 0.74)
+C23 P3 shuffled-day replay arx12: log_shuffled_s0 24h 1.19 6h 1.19 (op err 0.34), log_shuffled_s1 24h 1.28 6h 1.26 (op err 0.41)
+C23 P3 shuffled-day replay arx48: log_shuffled_s0 24h 1.20 6h 1.17 (op err 0.36), log_shuffled_s1 24h 1.26 6h 1.26 (op err 0.49)
+C23 P3 shuffled-day replay gru_1s_noise: log_shuffled_s0 24h 1.07 6h 1.01 (op err 0.48), log_shuffled_s1 24h 0.98 6h 1.01 (op err 0.64)
+C23 P3 shuffled-day replay gru_sim: log_shuffled_s0 24h 0.98 6h 0.92 (op err 0.38), log_shuffled_s1 24h 1.08 6h 1.02 (op err 0.47)
+C23 P3 shuffled-day replay pem2: log_shuffled_s0 24h 1.70 6h 1.37 (op err 1.06), log_shuffled_s1 24h 1.81 6h 1.45 (op err 1.61)
+C23 P3 shuffled-day replay tf_1s: log_shuffled_s0 24h 1.31 6h 1.10 (op err 0.50), log_shuffled_s1 24h 1.48 6h 1.22 (op err 0.78)
+C23 P3 shuffled-day replay tf_1s_noise: log_shuffled_s0 24h 1.04 6h 1.13 (op err 0.25), log_shuffled_s1 24h 0.98 6h 1.02 (op err 0.20)
+C23 P3 strat-day replay arx12: log_strat_s0 24h 1.10 6h 1.18 (op err 0.43), log_strat_s1 24h 1.21 6h 1.17 (op err 0.38)
+C23 P3 strat-day replay arx48: log_strat_s0 24h 1.12 6h 1.15 (op err 0.50), log_strat_s1 24h 1.16 6h 1.11 (op err 0.46)
+C23 P3 strat-day replay gru_1s_noise: log_strat_s0 24h 0.66 6h 0.87 (op err 0.27), log_strat_s1 24h 0.68 6h 1.11 (op err 0.29)
+C23 P3 strat-day replay gru_sim: log_strat_s0 24h 0.89 6h 0.98 (op err 0.35), log_strat_s1 24h 0.90 6h 1.11 (op err 0.40)
+C23 P3 strat-day replay pem2: log_strat_s0 24h 1.53 6h 1.35 (op err 0.45), log_strat_s1 24h 1.57 6h 1.31 (op err 0.47)
+C23 P3 strat-day replay tf_1s: log_strat_s0 24h 1.04 6h 1.05 (op err 0.38), log_strat_s1 24h 1.19 6h 1.20 (op err 0.40)
+C23 P3 strat-day replay tf_1s_noise: log_strat_s0 24h 0.63 6h 0.74 (op err 0.23), log_strat_s1 24h 0.80 6h 0.98 (op err 0.25)
+C17 HP sweep operational fractions by recipe (tf_1s): h48/lr0.001/6000 s0 0.94, h48/lr0.001/6000 s1 0.71, h48/lr0.001/10000 s0 0.69, h48/lr0.001/10000 s1 0.73, h48/lr0.003/6000 s0 0.68, h48/lr0.003/6000 s1 0.75, h48/lr0.003/10000 s0 0.68, h48/lr0.003/10000 s1 0.63, h96/lr0.001/6000 s0 0.81, h96/lr0.001/6000 s1 0.53, h96/lr0.001/10000 s0 0.66, h96/lr0.001/10000 s1 0.49, h96/lr0.003/6000 s0 1.10, h96/lr0.003/6000 s1 0.78, h96/lr0.003/10000 s0 0.83, h96/lr0.003/10000 s1 0.66
+C19 inverse controller: P1 -1/C -0.19 truth 2.55 law +1.58 learned gru_sim +0.56,gru_1s_noise +0.34,tf_1s_noise +0.91,tf_1s +1.98,arx48 +3.58,pem2 +4.18; P2 -1/C -0.85 truth 2.97 law +1.17 learned gru_sim +0.43,gru_1s_noise +0.17,tf_1s_noise +0.43,tf_1s +1.88,arx48 +3.30,pem2 +4.89; P3 -1/C -0.59 truth 2.70 law +1.07 learned gru_sim +0.76,gru_1s_noise +0.51,tf_1s_noise +0.58,tf_1s +1.31,arx48 +2.38,pem2 +3.25
+C20 pancreas ARX d=0.0: arx6_4h median ratio 13.34 positive 0.00, arx12_4h median ratio 4.06 positive 0.00, arx24_4h median ratio 3.69 positive 0.00
+C20 pancreas ARX d=0.7: arx6_4h median ratio -0.04 positive 0.90, arx12_4h median ratio -0.16 positive 0.70, arx24_4h median ratio -0.13 positive 0.70
+C6e dosing IV twin d=0.0: n=22 dose 4.2 severe 3/22 no-dose 2 BG0 169-586
+C6e dosing IV twin d=0.7: n=23 dose 5.0 severe 3/23 no-dose 0 BG0 169-586
+C6e dosing operational twin d=0.0: n=22 dose 7.0 severe 11/22 no-dose 0 BG0 169-586
+C6e dosing operational twin d=0.7: n=23 dose 5.9 severe 15/23 no-dose 7 BG0 169-586
+C6e dosing true effect (at operating point): n=25 dose 2.8 severe 0/25 no-dose 0 BG0 169-586
+C12 c7_data/c12_mpc.json: embedded 0.53; operational_A0.0_s0 λ0 1.41±0.46; operational_A0.0_s0 λ10 0.72±0.45; dither_A2.0_s0 λ0 0.32±0.20; dither_A2.0_s0 λ10 0.57±0.25; designed_A0.0_s0 λ0 0.58±0.27; designed_A0.0_s0 λ10 0.70±0.26
+C12 c7_data/c12_mpc_t21.8.json: embedded 0.47; operational_A0.0_s0 λ0 0.66±0.28; operational_A0.0_s0 λ10 0.55±0.36; dither_A2.0_s0 λ0 0.30±0.21; dither_A2.0_s0 λ10 0.49±0.22; designed_A0.0_s0 λ0 0.59±0.30; designed_A0.0_s0 λ10 0.67±0.25

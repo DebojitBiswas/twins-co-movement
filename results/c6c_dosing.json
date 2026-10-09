@@ -1,0 +1,438 @@
+[
+ {
+  "patient": "adult#001",
+  "bg0": 179.66793927280813,
+  "results": {
+   "true (designed-data reference)": {
+    "eff4": -7.972152023179717,
+    "dose": 7.526198675783508,
+    "bg4h": 96.33159139956052,
+    "bgmin": 85.06761311753868,
+    "hypo": false,
+    "severe": false
+   },
+   "operational twin d=0.0": {
+    "eff4": -5.475532616694587,
+    "dose": 10.0,
+    "bg4h": 82.77770356584304,
+    "bgmin": 71.0927498573483,
+    "hypo": false,
+    "severe": false
+   },
+   "IV twin (dither) d=0.0": {
+    "eff4": 4.263508030183443,
+    "dose": 0.0,
+    "bg4h": 152.79002779219056,
+    "bgmin": 144.01002360148465,
+    "hypo": false,
+    "severe": false
+   },
+   "operational twin d=0.7": {
+    "eff4": 0.923275679681097,
+    "dose": 0.0,
+    "bg4h": 152.79002779219056,
+    "bgmin": 144.01002360148465,
+    "hypo": false,
+    "severe": false
+   },
+   "IV twin (dither) d=0.7": {
+    "eff4": -5.662557869005701,
+    "dose": 10.0,
+    "bg4h": 82.77770356584304,
+    "bgmin": 71.0927498573483,
+    "hypo": false,
+    "severe": false
+   }
+  }
+ },
+ {
+  "patient": "adult#002",
+  "bg0": 210.3479535955622,
+  "results": {
+   "true (designed-data reference)": {
+    "eff4": -10.06339361038141,
+    "dose": 5.962203439812184,
+    "bg4h": 234.10901322304574,
+    "bgmin": 137.7240424531742,
+    "hypo": false,
+    "severe": false
+   },
+   "operational twin d=0.0": {
+    "eff4": -5.357717000587515,
+    "dose": 10.0,
+    "bg4h": 185.2764173092379,
+    "bgmin": 115.51195101643661,
+    "hypo": false,
+    "severe": false
+   },
+   "IV twin (dither) d=0.0": {
+    "eff4": -14.527619294435288,
+    "dose": 4.130064175276304,
+    "bg4h": 261.58932534565514,
+    "bgmin": 149.8592428786861,
+    "hypo": false,
+    "severe": false
+   },
+   "operational twin d=0.7": {
+    "eff4": 1.3967211521013179,
+    "dose": 0.0,
+    "bg4h": 350.04516669043545,
+    "bgmin": 185.68716104720355,
+    "hypo": false,
+    "severe": false
+   },
+   "IV twin (dither) d=0.7": {
+    "eff4": -3.3297284245937013,
+    "dose": 10.0,
+    "bg4h": 185.2764173092379,
+    "bgmin": 115.51195101643661,
+    "hypo": false,
+    "severe": false
+   }
+  }
+ },
+ {
+  "patient": "adult#003",
+  "bg0": 175.25454544001798,
+  "results": {
+   "true (designed-data reference)": {
+    "eff4": -20.427601924690947,
+    "dose": 2.9372023314923568,
+    "bg4h": 738.9158134704185,
+    "bgmin": 176.71275248996324,
+    "hypo": false,
+    "severe": false
+   },
+   "operational twin d=0.0": {
+    "eff4": -5.378196099566505,
+    "dose": 10.0,
+    "bg4h": 539.5534982411837,
+    "bgmin": 176.70902404824707,
+    "hypo": false,
+    "severe": false
+   },
+   "IV twin (dither) d=0.0": {
+    "eff4": -15.794328566096448,
+    "dose": 3.798831950906346,
+    "bg4h": 706.866333164126,
+    "bgmin": 176.7122973719856,
+    "hypo": false,
+    "severe": false
+   },
+   "operational twin d=0.7": {
+    "eff4": -0.7912269394334234,
+    "dose": 10.0,
+    "bg4h": 539.5534982411837,
+    "bgmin": 176.70902404824707,
+    "hypo": false,
+    "severe": false
+   },
+   "IV twin (dither) d=0.7": {
+    "eff4": -15.25844850334856,
+    "dose": 3.932247763383848,
+    "bg4h": 702.1191158149171,
+    "bgmin": 176.7122269075281,
+    "hypo": false,
+    "severe": false
+   }
+  }
+ },
+ {
+  "patient": "adult#004",
+  "bg0": 219.44600015787736,
+  "results": {
+   "true (designed-data reference)": {
+    "eff4": -40.487125801154974,
+    "dose": 1.4819525667166125,
+    "bg4h": 110.60597933465631,
+    "bgmin": 110.31637082111365,
+    "hypo": false,
+    "severe": false
+   },
+   "operational twin d=0.0": {
+    "eff4": -8.750732841872862,
+    "dose": 6.8565685965060945,
+    "bg4h": 37.806637951539486,
+    "bgmin": 34.20710306901881,
+    "hypo": true,
+    "severe": true
+   },
+   "IV twin (dither) d=0.0": {
+    "eff4": -22.088559107134156,
+    "dose": 2.7163383409930626,
+    "bg4h": 77.28265455649274,
+    "bgmin": 77.0089999210896,
+    "hypo": false,
+    "severe": false
+   },
+   "operational twin d=0.7": {
+    "eff4": -7.87970562261691,
+    "dose": 7.61449765683931,
+    "bg4h": 34.80426190452259,
+    "bgmin": 31.087973678590828,
+    "hypo": true,
+    "severe": true
+   },
+   "IV twin (dither) d=0.7": {
+    "eff4": -14.85163197464186,
+    "dose": 4.039960059772951,
+    "bg4h": 57.18790690697946,
+    "bgmin": 55.57169937871334,
+    "hypo": true,
+    "severe": false
+   }
+  }
+ },
+ {
+  "patient": "adult#005",
+  "bg0": 175.7319475783783,
+  "results": {
+   "true (designed-data reference)": {
+    "eff4": -8.458374567337614,
+    "dose": 7.0935614783119965,
+    "bg4h": 275.4378960360134,
+    "bgmin": 172.98754963951166,
+    "hypo": false,
+    "severe": false
+   },
+   "operational twin d=0.0": {
+    "eff4": -5.952530820904953,
+    "dose": 10.0,
+    "bg4h": 249.14168567240233,
+    "bgmin": 172.5758687759719,
+    "hypo": false,
+    "severe": false
+   },
+   "IV twin (dither) d=0.0": {
+    "eff4": -9.23560434078018,
+    "dose": 6.496597059173227,
+    "bg4h": 281.17808943036016,
+    "bgmin": 173.05686674963766,
+    "hypo": false,
+    "severe": false
+   },
+   "operational twin d=0.7": {
+    "eff4": 0.03601112382284705,
+    "dose": 0.0,
+    "bg4h": 351.71131893769376,
+    "bgmin": 173.47906245955238,
+    "hypo": false,
+    "severe": false
+   },
+   "IV twin (dither) d=0.7": {
+    "eff4": -1.989092877431725,
+    "dose": 10.0,
+    "bg4h": 249.14168567240233,
+    "bgmin": 172.5758687759719,
+    "hypo": false,
+    "severe": false
+   }
+  }
+ },
+ {
+  "patient": "adult#006",
+  "bg0": 359.0210545700363,
+  "results": {
+   "true (designed-data reference)": {
+    "eff4": -19.42795873802274,
+    "dose": 3.0883326863657135,
+    "bg4h": 191.06648188440607,
+    "bgmin": 145.67431000916028,
+    "hypo": false,
+    "severe": false
+   },
+   "operational twin d=0.0": {
+    "eff4": -4.447284045323004,
+    "dose": 10.0,
+    "bg4h": 61.155986026684474,
+    "bgmin": 45.52179312742892,
+    "hypo": true,
+    "severe": true
+   },
+   "IV twin (dither) d=0.0": {
+    "eff4": -28.402782506813953,
+    "dose": 2.112469085928667,
+    "bg4h": 215.64489676488557,
+    "bgmin": 167.03294381866627,
+    "hypo": false,
+    "severe": false
+   },
+   "operational twin d=0.7": {
+    "eff4": -3.32517235884241,
+    "dose": 10.0,
+    "bg4h": 61.155986026684474,
+    "bgmin": 45.52179312742892,
+    "hypo": true,
+    "severe": true
+   },
+   "IV twin (dither) d=0.7": {
+    "eff4": -12.08028650852394,
+    "dose": 4.966769617398027,
+    "bg4h": 147.23733928512428,
+    "bgmin": 110.01980989138379,
+    "hypo": false,
+    "severe": false
+   }
+  }
+ },
+ {
+  "patient": "adult#007",
+  "bg0": 240.9079750180975,
+  "results": {
+   "true (designed-data reference)": {
+    "eff4": -36.32087527783358,
+    "dose": 1.6519425685927138,
+    "bg4h": 106.88020024851667,
+    "bgmin": 102.11746455659855,
+    "hypo": false,
+    "severe": false
+   },
+   "operational twin d=0.0": {
+    "eff4": -5.508638552980014,
+    "dose": 10.0,
+    "bg4h": 21.356147712264264,
+    "bgmin": 20.637986976813437,
+    "hypo": true,
+    "severe": true
+   },
+   "IV twin (dither) d=0.0": {
+    "eff4": -19.185537209113615,
+    "dose": 3.127355744383247,
+    "bg4h": 67.3275031807757,
+    "bgmin": 66.61286978805254,
+    "hypo": true,
+    "severe": false
+   },
+   "operational twin d=0.7": {
+    "eff4": -8.984009293710601,
+    "dose": 6.678532717236163,
+    "bg4h": 32.146401573733,
+    "bgmin": 31.634900401606938,
+    "hypo": true,
+    "severe": true
+   },
+   "IV twin (dither) d=0.7": {
+    "eff4": -22.917921682456296,
+    "dose": 2.618038443072702,
+    "bg4h": 78.36503011043115,
+    "bgmin": 76.78236142117451,
+    "hypo": false,
+    "severe": false
+   }
+  }
+ },
+ {
+  "patient": "adult#008",
+  "bg0": 217.83544591873695,
+  "results": {
+   "true (designed-data reference)": {
+    "eff4": -13.427261609234534,
+    "dose": 4.4685209647464745,
+    "bg4h": 178.73384216188828,
+    "bgmin": 142.38235320311583,
+    "hypo": false,
+    "severe": false
+   },
+   "operational twin d=0.0": {
+    "eff4": -6.12185008545956,
+    "dose": 9.800958723656146,
+    "bg4h": 116.35036649765122,
+    "bgmin": 87.69823531467215,
+    "hypo": false,
+    "severe": false
+   },
+   "IV twin (dither) d=0.0": {
+    "eff4": -6.981839704154879,
+    "dose": 8.593723508761467,
+    "bg4h": 127.99589015022754,
+    "bgmin": 99.02940980184987,
+    "hypo": false,
+    "severe": false
+   },
+   "operational twin d=0.7": {
+    "eff4": -1.9290863217541407,
+    "dose": 10.0,
+    "bg4h": 114.5435606513704,
+    "bgmin": 85.87887679267888,
+    "hypo": false,
+    "severe": false
+   },
+   "IV twin (dither) d=0.7": {
+    "eff4": -13.456443454789031,
+    "dose": 4.458830463011125,
+    "bg4h": 178.87637970662064,
+    "bgmin": 142.49420234732594,
+    "hypo": false,
+    "severe": false
+   }
+  }
+ },
+ {
+  "patient": "adult#009",
+  "bg0": 204.24354244102693,
+  "results": {
+   "true (designed-data reference)": {
+    "eff4": -7.316028713068761,
+    "dose": 8.201170655990026,
+    "bg4h": 101.65129244142807,
+    "bgmin": 90.11025108396008,
+    "hypo": false,
+    "severe": false
+   },
+   "operational twin d=0.7": {
+    "eff4": 5.497640888927154,
+    "dose": 0.0,
+    "bg4h": 160.11793976196086,
+    "bgmin": 148.8286131257104,
+    "hypo": false,
+    "severe": false
+   }
+  }
+ },
+ {
+  "patient": "adult#010",
+  "bg0": 179.16755814974212,
+  "results": {
+   "true (designed-data reference)": {
+    "eff4": -11.607947594848184,
+    "dose": 5.168872404853816,
+    "bg4h": 118.14308073047802,
+    "bgmin": 118.12700091243612,
+    "hypo": false,
+    "severe": false
+   },
+   "operational twin d=0.0": {
+    "eff4": -8.120127227184854,
+    "dose": 7.389046787238732,
+    "bg4h": 102.03400956610207,
+    "bgmin": 101.98175107023744,
+    "hypo": false,
+    "severe": false
+   },
+   "IV twin (dither) d=0.0": {
+    "eff4": 4.10452398838899,
+    "dose": 0.0,
+    "bg4h": 171.93776884634977,
+    "bgmin": 170.06574024600522,
+    "hypo": false,
+    "severe": false
+   },
+   "operational twin d=0.7": {
+    "eff4": 0.6410103367244692,
+    "dose": 0.0,
+    "bg4h": 171.93776884634977,
+    "bgmin": 170.06574024600522,
+    "hypo": false,
+    "severe": false
+   },
+   "IV twin (dither) d=0.7": {
+    "eff4": -4.0200880625526585,
+    "dose": 10.0,
+    "bg4h": 86.75427840955417,
+    "bgmin": 86.64776902482878,
+    "hypo": false,
+    "severe": false
+   }
+  }
+ }
+]

@@ -1,0 +1,1 @@
+NMI-style package built by build_submission.py. main.tex = main text + Methods + Extended Data (Table 1, Table 2, Fig. 1); supplement.tex = Supplementary Tables 1-9 and Supplementary Notes. pdfLaTeX; natbib/plainnat; figs/ PNG.

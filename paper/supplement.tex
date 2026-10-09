@@ -1,0 +1,270 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,graphicx,booktabs,xcolor,hyperref,caption}
+\usepackage[numbers,sort&compress]{natbib}
+\hypersetup{colorlinks,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+\newcommand{\vone}[1]{\textcolor{blue!60!black}{[[v1: #1]]}}
+\newcommand{\E}{\mathbb{E}}
+\graphicspath{{figs/}}
+\title{Supplementary Information for: Digital twins that forecast operation best learn the controller's co-movement, not the system's response}
+\newcommand{\pancreasarx}{Supplementary Note~7}
+\newcommand{\pancreasarxnumbers}{reactive loop, ARX(6/12/24) per-patient median learned/true 6.8/2.1/2.5 over 23 patients, with 10/5/7 of 68 cells excluded for divergent free simulation; meal-bolused loop $-0.01$/$-0.03$/$-0.05$, positive in 16/13/15 of 23 patients, no exclusions; linear twin 0.42 and 0.10 on the same logs; on designed open-loop logs ARX(6/12/24) 0.20/0.56/0.90 and the linear twin 1.00, 25 patients, no divergence}
+\author{Debojit Biswas\\[2pt]\small Florida Atlantic University, Boca Raton, FL, USA\\\small \texttt{dbiswas2015@fau.edu}}
+\date{}
+\begin{document}
+\maketitle
+\section*{Supplementary Tables}
+\paragraph{Supplementary Table 1 --- Two-clause capability criterion, designed-data twins, applied as pre-stated.} Clause 1: 24-h learned fraction within $\pm50\%$ of the truth (a ratio rule, asymmetric on the log scale: 0.50 fails, 1.50 passes). Clause 2: rollout error on the in-range designed test schedule, all samples, below persistence on the same schedule (1.10, 1.74, 1.40~K; restricted to in-range samples the pair is twin in-range error against persistence 0.98, 0.80 and 1.62~K, which fails most families in period~2, ARX(48) included, because the in-range samples there are the quiet ones, so that version is informative about the mask rather than the twins). Entries: fraction / in-range designed-test error (K); bold where both clauses pass; superscripts mark the failed clause.
+\begin{center}\small\begin{tabular}{lccc}\toprule family & period 1 & period 2 & period 3\\\midrule
+GRU, simulation error & 1.04 / 1.27$^{2}$ & \textbf{1.06 / 1.37} & \textbf{1.27 / 0.38}\\
+GRU 256, simulation error & 0.86 / 1.58$^{2}$ & \textbf{1.03 / 1.22} & \textbf{1.27 / 0.31}\\
+GRU, next-step & 1.09 / 1.19$^{2}$ & \textbf{1.14 / 1.38} & \textbf{0.79 / 0.90}\\
+GRU 256, next-step & \textbf{1.05 / 0.85} & -- & --\\
+GRU, next-step + noise & \textbf{1.28 / 1.05} & \textbf{0.66 / 1.60} & \textbf{0.93 / 1.34}\\
+Transformer, next-step & \textbf{0.98 / 0.96} & \textbf{1.02 / 0.94} & \textbf{0.75 / 1.15}\\
+Transformer 4-layer, next-step & \textbf{0.75 / 0.70} & \textbf{1.01 / 0.93} & \textbf{0.65 / 0.76}\\
+Transformer, next-step + noise & \textbf{0.90 / 0.98} & 0.50 / 1.13$^{1}$ & \textbf{0.80 / 0.88}\\
+ARX(12) & \textbf{1.09 / 0.88} & \textbf{1.20 / 1.15} & \textbf{1.15 / 0.33}\\
+ARX(48) & \textbf{1.04 / 1.07} & \textbf{1.10 / 1.26} & \textbf{1.07 / 0.34}\\
+PEM-SS(2) & \textbf{1.38 / 0.80} & \textbf{1.47 / 1.04} & \textbf{1.45 / 0.55}\\
+Grey-box 2R2C (innovations gain) & 0.49 / 1.88$^{1}$$^{2}$ & 0.08 / 2.52$^{1}$$^{2}$ & 0.21 / 1.07$^{1}$\\
+\bottomrule\end{tabular}\end{center} The GPU families have 2--3 seeds and the 256-unit next-step GRU was run in period~1 only. Under the pre-stated rule the simulation-error GRU, its 256-unit version and the clean next-step GRU fail clause~2 in period~1 (designed logs lie mostly outside the operating range there) and the noise-injected transformer fails clause~1 in period~2 by 0.001; the headline comparison therefore rests on periods~2 and~3 for the simulation-error GRU, and no headline range depends on the noise-injected transformer's period-2 cell.
+
+\paragraph{Supplementary Table 2 --- Recipe sweep for the clean next-step families (period 1).} Hidden size $\{48, 96\}$, learning rate $\{10^{-3}, 3\cdot10^{-3}\}$, steps $\{6000, 10000\}$, two seeds, trained on the designed log (selection) and on the operational log (report). Selection rule, fixed before the sweep: lowest in-range designed-test error of the designed-data twin. Entries: operational-twin learned fraction (seed 0 / seed 1) and its in-range error on the designed test schedule, mean of two seeds.
+\begin{center}\small\resizebox{\textwidth}{!}{\begin{tabular}{lcccccc}\toprule recipe & TF selection error (K) & TF fraction & TF in-range (K) & GRU selection error (K) & GRU fraction & GRU in-range (K)\\\midrule
+h48, lr 0.001, 6000 steps & 0.73 & 0.94 / 0.71 & 1.57 & 1.42 & 1.55 / 2.33 & 1.31\\
+h48, lr 0.001, 10000 steps & \textbf{0.69} & \textbf{0.69 / 0.73} & 1.30 & 1.35 & 2.84 / 2.23 & 1.86\\
+h48, lr 0.003, 6000 steps & 0.90 & 0.68 / 0.75 & 1.08 & 1.25 & 1.04 / 3.00 & 3.31\\
+h48, lr 0.003, 10000 steps & 0.84 & 0.68 / 0.63 & 1.40 & 1.35 & 1.22 / 3.75 & 4.60\\
+h96, lr 0.001, 6000 steps & 0.87 & 0.81 / 0.53 & 0.93 & 1.37 & 1.44 / 1.39 & 1.33\\
+h96, lr 0.001, 10000 steps & 0.84 & 0.66 / 0.49 & 1.06 & \textbf{1.21} & \textbf{1.34 / 1.10} & 1.46\\
+h96, lr 0.003, 6000 steps & 0.89 & 1.10 / 0.78 & 1.25 & 1.32 & 0.28 / 1.01 & 3.89\\
+h96, lr 0.003, 10000 steps & 0.88 & 0.83 / 0.66 & 1.10 & 1.33 & 0.29 / 0.87 & 4.36\\
+\bottomrule\end{tabular}}\end{center} Bold, the recipe selected on designed data. Across the sixteen operational transformer runs the fraction spans 0.49--1.10: fifteen lie above the noise-injected transformer's interval (0.22--0.50) and one (0.49) touches its upper limit. The clean GRU spans 0.28--3.75 with in-range errors of 0.9--6.9~K against persistence 1.10~K, i.e.\ it is unstable rather than merely recipe-dependent.
+
+\paragraph{Supplementary Table 3 --- Conformal coverage of 90\% intervals, operational-data twins, 6--24-h horizon band.} Columns: held-out operational days; the in-range designed schedule, all samples; the same schedule restricted to samples whose temperature lies inside the training log's range (the quantity quoted in Results). Mean over seeds.
+\begin{center}\small\resizebox{\textwidth}{!}{\begin{tabular}{lccccccccc}\toprule & \multicolumn{3}{c}{period 1} & \multicolumn{3}{c}{period 2} & \multicolumn{3}{c}{period 3}\\ family & op. & sched. & in-range & op. & sched. & in-range & op. & sched. & in-range\\\midrule
+GRU, simulation error & 85 & 52 & 48 & 87 & 65 & 81 & 98 & 27 & 40\\
+GRU 256, simulation error & 82 & 40 & 38 & 92 & 66 & 85 & 99 & 19 & 35\\
+GRU, next-step + noise & 91 & 63 & 61 & 87 & 58 & 76 & 99 & 24 & 46\\
+Transformer, next-step & 90 & 81 & 80 & 98 & 80 & 98 & 88 & 37 & 56\\
+Transformer, next-step + noise & 83 & 55 & 55 & 87 & 64 & 81 & 100 & 20 & 38\\
+ARX(12) & 80 & 86 & 89 & 61 & 87 & 93 & 92 & 57 & 64\\
+ARX(48) & 66 & 88 & 90 & 61 & 90 & 98 & 97 & 49 & 64\\
+PEM-SS(2) & 91 & 84 & 86 & 46 & 80 & 92 & 99 & 82 & 82\\
+\bottomrule\end{tabular}}\end{center}
+
+\paragraph{Supplementary Table 4 --- Dither amplitude series (period 1) and the cost of the $\pm2$-K dither in every period.} Comfort cost, rms difference between the dithered and the operational zone temperature over the training month; energy, change in summed heat-pump modulation. Learned fraction of operational-twin families trained on the dithered log (mean over seeds; for $\pm2$~K the range over the three logs).
+\begin{center}\small\resizebox{\textwidth}{!}{\begin{tabular}{lcccccc}\toprule log & comfort (K) & energy & GRU sim. & TF next-step & ARX(48) & PEM-SS(2)\\\midrule
+period 1, $\pm0.5$~K & 0.31 & +4\% & 0.51 & 0.68 & 0.90 & 1.24\\
+period 1, $\pm1.0$~K & 0.56 & +12\% & 0.56 & 0.88 & 0.82 & 1.01\\
+period 1, $\pm2$~K (3 logs) & 0.89--0.93 & +15 to +21\% & 0.67--0.74 & 0.65--0.81 & 0.83--0.87 & 1.01--1.12\\
+period 2, $\pm2$~K (3 logs) & 0.90--0.94 & +21 to +28\% & 0.55--0.63 & 0.45--0.77 & 0.82--0.83 & 0.94--1.05\\
+period 3, $\pm2$~K (3 logs) & 0.94--1.01 & +15 to +20\% & 0.67--0.87 & 0.53--0.65 & 0.76--0.86 & 0.94--1.06\\
+\bottomrule\end{tabular}}\end{center}
+
+\paragraph{Supplementary Table 5 --- The linear law compared with the dithered logs, where its excitation is exogenous.} Squared coherence $\gamma^2$ between the applied modulation and the logged set-point offset, averaged over the 14 Welch bins with periods between 3.2 and 24~h (band chosen after the fact; Extended Data Table~2 item~19), the law's 24-h prediction $\gamma^2 + (1-\gamma^2)\,G_{\mathrm{op}}(24\,\mathrm{h})/G(24\,\mathrm{h})$ with the fitted controller's inverse ($-0.07$, $-0.29$ and $-0.22$ of the truth in the three periods), and the simulation-error GRU's learned fraction at 24 and 6~h on the same log (mean over five seeds). This is a comparison, not a test with a null: the logs share weather within a period, and the law's prediction is a scalar for one horizon.
+\begin{center}\small\begin{tabular}{lccccc}\toprule log & $\gamma^2$ & law, 24 h & GRU, 24 h & GRU $-$ law & GRU, 6 h\\\midrule
+period 1, $\pm$0.5~K, log 0 & 0.49 & 0.45 & 0.51 & +0.05 & 1.07\\
+period 1, $\pm$1.0~K, log 0 & 0.61 & 0.58 & 0.56 & -0.02 & 1.17\\
+period 1, $\pm$2.0~K, log 0 & 0.68 & 0.65 & 0.74 & +0.09 & 1.17\\
+period 1, $\pm$2.0~K, log 1 & 0.75 & 0.74 & 0.71 & -0.02 & 1.08\\
+period 1, $\pm$2.0~K, log 2 & 0.70 & 0.68 & 0.67 & -0.01 & 1.15\\
+period 2, $\pm$2.0~K, log 0 & 0.58 & 0.46 & 0.63 & +0.17 & 1.06\\
+period 2, $\pm$2.0~K, log 1 & 0.60 & 0.49 & 0.55 & +0.06 & 0.95\\
+period 2, $\pm$2.0~K, log 2 & 0.59 & 0.48 & 0.63 & +0.15 & 1.00\\
+period 3, $\pm$2.0~K, log 0 & 0.55 & 0.46 & 0.67 & +0.21 & 1.00\\
+period 3, $\pm$2.0~K, log 1 & 0.67 & 0.60 & 0.87 & +0.27 & 0.94\\
+period 3, $\pm$2.0~K, log 2 & 0.50 & 0.40 & 0.70 & +0.31 & 0.98\\
+\bottomrule\end{tabular}\end{center} Across the eleven logs the GRU exceeds the law in every period-3 log by 0.2--0.3 and agrees within 0.1 in six; Spearman $\rho(\gamma^2, \text{fraction}) = 0.47$ ($p = 0.14$), and the rms deviation from the law (0.160) is larger than that from the constant mean fraction (0.098): the scalar law does not predict the fraction across these logs. The 6-h fractions (0.94--1.17) are not described by the scalar law at all.
+
+\paragraph{Supplementary Table 6 --- Learned fraction by horizon, $+0.3$ and $+0.1$ steps from the same seven operational start states (operational-data twins, mean over seeds; the $+0.1$ 24-h entry carries the hierarchical bootstrap interval over seeds and starts).} In-range fraction of the first 24~h of each arm (base 0.4; intervention 0.7 or 0.5) and the ratio of the operational-data to the designed-data 24-h estimate (op./des.). True $+0.1$ effects at 24~h: 0.89, 1.05, 0.95~K.
+\begin{center}\scriptsize\resizebox{\textwidth}{!}{\begin{tabular}{llccccccccccc}\toprule period & family & \multicolumn{5}{c}{$+0.3$ step: 3, 6, 12, 24, 48 h} & \multicolumn{5}{c}{$+0.1$ step: 3, 6, 12, 24, 48 h} & op./des.\\\midrule
+\multicolumn{13}{l}{period 1: in range, base arm 0.71, $+0.3$ arm 0.33, $+0.1$ arm 0.58}\\
+1 & GRU, simulation error & 0.69 & 0.59 & 0.40 & 0.22 & 0.14 & 0.74 & 0.60 & 0.41 & 0.26 [0.17, 0.38] & 0.14 & 0.21\\
+1 & GRU 256, simulation error & 0.63 & 0.56 & 0.35 & 0.19 & 0.13 & 0.70 & 0.68 & 0.36 & 0.20 [0.16, 0.23] & 0.13 & 0.23\\
+1 & GRU, next-step + noise & 0.29 & 0.32 & 0.05 & 0.13 & 0.09 & 0.35 & 0.27 & 0.02 & 0.09 [0.05, 0.14] & 0.05 & 0.10\\
+1 & Transformer, next-step & 1.15 & 0.73 & 0.48 & 0.78 & 0.65 & 1.31 & 0.87 & 0.55 & 0.87 [0.65, 1.18] & 0.64 & 0.79\\
+1 & Transformer, next-step + noise & 0.15 & 0.45 & 0.45 & 0.36 & 0.28 & 0.02 & 0.33 & 0.42 & 0.24 [0.10, 0.42] & 0.17 & 0.40\\
+1 & ARX(12) & 1.29 & 1.37 & 1.43 & 1.55 & 1.43 & 1.25 & 1.31 & 1.36 & 1.48 [1.35, 1.64] & 1.35 & 1.43\\
+1 & ARX(48) & 1.24 & 1.28 & 1.31 & 1.40 & 1.25 & 1.21 & 1.23 & 1.25 & 1.33 [1.22, 1.48] & 1.17 & 1.34\\
+1 & PEM-SS(2) & 1.29 & 1.35 & 1.44 & 1.64 & 1.64 & 1.26 & 1.30 & 1.37 & 1.56 [1.42, 1.74] & 1.54 & 1.19\\
+\multicolumn{13}{l}{period 2: in range, base arm 0.79, $+0.3$ arm 0.27, $+0.1$ arm 0.57}\\
+2 & GRU, simulation error & 0.36 & 0.32 & 0.33 & 0.14 & 0.10 & 0.42 & 0.37 & 0.33 & 0.15 [0.09, 0.19] & 0.10 & 0.14\\
+2 & GRU 256, simulation error & 0.56 & 0.48 & 0.37 & 0.21 & 0.14 & 0.59 & 0.47 & 0.38 & 0.21 [0.17, 0.24] & 0.14 & 0.20\\
+2 & GRU, next-step + noise & -0.06 & 0.18 & 0.08 & 0.06 & 0.05 & -0.06 & 0.16 & 0.01 & 0.07 [0.02, 0.17] & 0.09 & 0.09\\
+2 & Transformer, next-step & 0.69 & 0.51 & 0.48 & 0.63 & 0.75 & 0.74 & 0.59 & 0.52 & 0.48 [0.33, 0.62] & 0.59 & 0.62\\
+2 & Transformer, next-step + noise & -0.01 & 0.22 & 0.17 & 0.15 & 0.13 & -0.05 & 0.23 & 0.17 & 0.10 [0.05, 0.17] & 0.10 & 0.29\\
+2 & ARX(12) & 1.13 & 1.15 & 1.15 & 1.14 & 0.95 & 1.09 & 1.09 & 1.08 & 1.07 [0.98, 1.18] & 0.89 & 0.95\\
+2 & ARX(48) & 1.09 & 1.10 & 1.10 & 1.11 & 0.93 & 1.05 & 1.04 & 1.04 & 1.05 [0.94, 1.16] & 0.87 & 1.01\\
+2 & PEM-SS(2) & 1.17 & 1.26 & 1.42 & 1.65 & 1.67 & 1.13 & 1.19 & 1.34 & 1.56 [1.40, 1.71] & 1.56 & 1.12\\
+\multicolumn{13}{l}{period 3: in range, base arm 0.80, $+0.3$ arm 0.62, $+0.1$ arm 0.81}\\
+3 & GRU, simulation error & 0.72 & 0.75 & 0.59 & 0.28 & 0.19 & 0.86 & 0.88 & 0.66 & 0.36 [0.23, 0.58] & 0.27 & 0.22\\
+3 & GRU 256, simulation error & 0.83 & 0.79 & 0.57 & 0.29 & 0.19 & 0.92 & 0.89 & 0.63 & 0.32 [0.26, 0.37] & 0.22 & 0.23\\
+3 & GRU, next-step + noise & 0.48 & 0.64 & 0.32 & 0.19 & 0.13 & 0.69 & 0.70 & 0.35 & 0.23 [0.08, 0.48] & 0.15 & 0.20\\
+3 & Transformer, next-step & 1.02 & 1.06 & 0.75 & 0.48 & 0.32 & 1.01 & 1.10 & 0.84 & 0.53 [0.37, 0.76] & 0.32 & 0.65\\
+3 & Transformer, next-step + noise & 0.34 & 0.51 & 0.43 & 0.22 & 0.13 & 0.82 & 0.92 & 0.62 & 0.29 [0.11, 0.54] & 0.19 & 0.27\\
+3 & ARX(12) & 1.21 & 1.17 & 1.05 & 0.90 & 0.70 & 1.17 & 1.13 & 1.00 & 0.85 [0.76, 0.96] & 0.66 & 0.78\\
+3 & ARX(48) & 1.20 & 1.11 & 0.99 & 0.88 & 0.61 & 1.15 & 1.07 & 0.94 & 0.84 [0.75, 0.93] & 0.58 & 0.82\\
+3 & PEM-SS(2) & 1.17 & 1.22 & 1.25 & 1.21 & 1.01 & 1.13 & 1.17 & 1.20 & 1.14 [1.02, 1.28] & 0.95 & 0.83\\
+\bottomrule\end{tabular}}\end{center}
+
+\paragraph{Supplementary Table 7 --- Operational-data response normalised by the designed-data response of the same architecture at the same horizon ($+0.3$ step).} A ratio of 1 means the operational twin learned what its designed-data counterpart learned; decay with horizon that is specific to the operational twins, and absent for the direct methods, is the signature of the operating regime rather than of the model class.
+\begin{center}\small\resizebox{\textwidth}{!}{\begin{tabular}{llccccc}\toprule period & family & 3 h & 6 h & 12 h & 24 h & 48 h\\\midrule
+1 & GRU, simulation error & 0.68 & 0.65 & 0.37 & 0.21 & 0.14\\
+1 & GRU 256, simulation error & 0.65 & 0.64 & 0.48 & 0.23 & 0.16\\
+1 & GRU, next-step + noise & 0.26 & 0.29 & 0.04 & 0.10 & 0.09\\
+1 & Transformer, next-step & 1.37 & 0.88 & 0.60 & 0.79 & 0.66\\
+1 & Transformer, next-step + noise & 0.16 & 0.56 & 0.51 & 0.40 & 0.32\\
+1 & ARX(12) & 1.30 & 1.39 & 1.47 & 1.43 & 1.28\\
+1 & ARX(48) & 1.26 & 1.28 & 1.36 & 1.34 & 1.17\\
+1 & PEM-SS(2) & 1.38 & 1.28 & 1.23 & 1.19 & 1.14\\
+2 & GRU, simulation error & 0.37 & 0.33 & 0.32 & 0.14 & 0.11\\
+2 & GRU 256, simulation error & 0.68 & 0.60 & 0.39 & 0.20 & 0.15\\
+2 & GRU, next-step + noise & -0.08 & 0.22 & 0.15 & 0.09 & 0.11\\
+2 & Transformer, next-step & 1.03 & 0.89 & 0.58 & 0.62 & 0.80\\
+2 & Transformer, next-step + noise & -0.02 & 0.41 & 0.40 & 0.29 & 0.30\\
+2 & ARX(12) & 1.20 & 1.17 & 1.09 & 0.95 & 0.76\\
+2 & ARX(48) & 1.18 & 1.12 & 1.07 & 1.01 & 0.83\\
+2 & PEM-SS(2) & 1.28 & 1.21 & 1.16 & 1.12 & 1.08\\
+3 & GRU, simulation error & 0.76 & 0.76 & 0.45 & 0.22 & 0.16\\
+3 & GRU 256, simulation error & 1.23 & 0.86 & 0.42 & 0.23 & 0.16\\
+3 & GRU, next-step + noise & 0.73 & 0.75 & 0.33 & 0.20 & 0.15\\
+3 & Transformer, next-step & 1.22 & 1.33 & 0.95 & 0.65 & 0.46\\
+3 & Transformer, next-step + noise & 0.50 & 0.67 & 0.51 & 0.27 & 0.18\\
+3 & ARX(12) & 1.10 & 1.08 & 0.97 & 0.78 & 0.58\\
+3 & ARX(48) & 1.11 & 1.00 & 0.92 & 0.82 & 0.55\\
+3 & PEM-SS(2) & 1.10 & 1.06 & 0.98 & 0.83 & 0.65\\
+\bottomrule\end{tabular}}\end{center}
+
+\paragraph{Supplementary Table 8 --- Shuffled-day replay: the operational modulation sequence with its days permuted, replayed open-loop.} Same weather, occupancy schedule, multiset of input values and within-day profile as the operational log. Per log: correlation of the replayed with the operational sequence; correlation of the modulation with the outdoor temperature and $R^2$ of the modulation on the logged drivers (outdoor temperature, irradiance, set-point, hour of day) against the operational log's; zone-temperature range and s.d.; fraction of replay samples inside the operational range; replay-to-operational ratio of input power in the 1--2-day and $>$2-day bands (7-day Welch segments; the daily line is within 4\% in every log). Per family: 24-h learned fraction with a hierarchical bootstrap interval over seeds and start states, the 6-h fraction, the twin's rollout error on the operational test weeks, and the operational-log values. The same two permutation seeds are used in every period; the spread between the two logs exceeds the spread between seeds and is not characterised by two draws.
+\emph{Period 1.} Operational log: corr$(u,T_{\mathrm{out}})$ -0.55, $R^2$ 0.69, zone temperature 20.1--23.4~$^\circ$C (s.d.\ 0.46~K); dithered logs: corr -0.30 to -0.27, $R^2$ 0.58--0.69; designed logs: $R^2$ 0.08--0.13; persistence on the operational weeks 0.66~K.
+\begin{center}\scriptsize\resizebox{\textwidth}{!}{\begin{tabular}{lcccccccc}\toprule log & corr.\ with op.\ $u$ & corr$(u,T_{\mathrm{out}})$ & $R^2$ & range ($^\circ$C) & s.d.\ (K) & in range & power 1--2 d & power $>$2 d\\\midrule
+replay 0 & 0.47 & -0.07 & 0.33 & 17.1--27.5 & 2.22 & 0.50 & 0.71 & 0.99\\
+replay 1 & 0.46 & -0.07 & 0.29 & 17.3--25.5 & 1.81 & 0.51 & 0.66 & 0.84\\
+\bottomrule\end{tabular}}\end{center}
+\begin{center}\scriptsize\resizebox{\textwidth}{!}{\begin{tabular}{lcccccccc}\toprule & \multicolumn{3}{c}{replay 0} & \multicolumn{3}{c}{replay 1} & \multicolumn{2}{c}{operational log}\\ family & 24 h [interval] & 6 h & op.\ error & 24 h [interval] & 6 h & op.\ error & 24 h & 6 h\\\midrule
+GRU, simulation error & 1.21 [1.10, 1.33] & 0.88 & 0.91 & 0.73 [0.67, 0.83] & 0.93 & 1.19 & 0.22 & 0.59\\
+Transformer, next-step & 1.08 [0.95, 1.27] & 0.94 & 0.98 & 0.96 [0.76, 1.20] & 0.91 & 0.68 & 0.78 & 0.73\\
+GRU, next-step + noise & 0.87 [0.73, 1.00] & 0.79 & 1.08 & 0.54 [0.43, 0.67] & 0.86 & 1.09 & 0.13 & 0.32\\
+Transformer, next-step + noise & 0.78 [0.65, 0.92] & 0.80 & 0.82 & 0.72 [0.60, 0.83] & 0.84 & 1.04 & 0.36 & 0.45\\
+ARX(12) & 1.29 [1.18, 1.43] & 1.20 & 0.76 & 1.23 [1.13, 1.37] & 1.20 & 0.80 & 1.55 & 1.37\\
+ARX(48) & 1.17 [1.08, 1.30] & 1.14 & 0.96 & 1.09 [1.00, 1.21] & 1.15 & 1.01 & 1.40 & 1.28\\
+PEM-SS(2) & 1.59 [1.46, 1.77] & 1.34 & 0.69 & 1.54 [1.42, 1.71] & 1.33 & 0.59 & 1.64 & 1.35\\
+\bottomrule\end{tabular}}\end{center}
+\emph{Period 2.} Operational log: corr$(u,T_{\mathrm{out}})$ -0.52, $R^2$ 0.56, zone temperature 20.2--24.3~$^\circ$C (s.d.\ 0.62~K); dithered logs: corr -0.36 to -0.29, $R^2$ 0.53--0.61; designed logs: $R^2$ 0.04--0.19; persistence on the operational weeks 0.65~K.
+\begin{center}\scriptsize\resizebox{\textwidth}{!}{\begin{tabular}{lcccccccc}\toprule log & corr.\ with op.\ $u$ & corr$(u,T_{\mathrm{out}})$ & $R^2$ & range ($^\circ$C) & s.d.\ (K) & in range & power 1--2 d & power $>$2 d\\\midrule
+replay 0 & 0.42 & -0.13 & 0.33 & 16.7--26.0 & 2.16 & 0.51 & 0.72 & 1.50\\
+replay 1 & 0.43 & -0.16 & 0.31 & 16.2--29.7 & 2.88 & 0.37 & 0.90 & 1.61\\
+\bottomrule\end{tabular}}\end{center}
+\begin{center}\scriptsize\resizebox{\textwidth}{!}{\begin{tabular}{lcccccccc}\toprule & \multicolumn{3}{c}{replay 0} & \multicolumn{3}{c}{replay 1} & \multicolumn{2}{c}{operational log}\\ family & 24 h [interval] & 6 h & op.\ error & 24 h [interval] & 6 h & op.\ error & 24 h & 6 h\\\midrule
+GRU, simulation error & 1.07 [0.99, 1.17] & 1.06 & 1.05 & 1.21 [1.13, 1.31] & 1.04 & 1.16 & 0.14 & 0.32\\
+Transformer, next-step & 1.17 [0.91, 1.41] & 0.81 & 1.15 & 1.60 [1.17, 2.08] & 1.27 & 0.79 & 0.63 & 0.51\\
+GRU, next-step + noise & 0.60 [0.32, 0.91] & 0.81 & 1.03 & 1.01 [0.56, 1.51] & 1.27 & 1.17 & 0.06 & 0.18\\
+Transformer, next-step + noise & 0.65 [0.52, 0.80] & 0.67 & 1.08 & 0.66 [0.52, 0.80] & 0.79 & 1.06 & 0.15 & 0.22\\
+ARX(12) & 1.06 [0.97, 1.15] & 1.06 & 1.42 & 1.26 [1.14, 1.37] & 1.09 & 1.41 & 1.14 & 1.15\\
+ARX(48) & 1.00 [0.91, 1.10] & 1.07 & 1.65 & 1.19 [1.09, 1.31] & 1.14 & 1.44 & 1.11 & 1.10\\
+PEM-SS(2) & 1.60 [1.47, 1.74] & 1.30 & 1.00 & 1.67 [1.53, 1.82] & 1.27 & 1.23 & 1.65 & 1.26\\
+\bottomrule\end{tabular}}\end{center}
+\emph{Period 3.} Operational log: corr$(u,T_{\mathrm{out}})$ -0.70, $R^2$ 0.67, zone temperature 20.1--23.7~$^\circ$C (s.d.\ 0.58~K); dithered logs: corr -0.43 to -0.42, $R^2$ 0.58--0.63; designed logs: $R^2$ 0.04--0.06; persistence on the operational weeks 0.51~K.
+\begin{center}\scriptsize\resizebox{\textwidth}{!}{\begin{tabular}{lcccccccc}\toprule log & corr.\ with op.\ $u$ & corr$(u,T_{\mathrm{out}})$ & $R^2$ & range ($^\circ$C) & s.d.\ (K) & in range & power 1--2 d & power $>$2 d\\\midrule
+replay 0 & 0.34 & -0.11 & 0.24 & 15.5--32.4 & 4.29 & 0.21 & 0.88 & 2.08\\
+replay 1 & 0.19 & 0.05 & 0.28 & 13.2--31.6 & 5.33 & 0.17 & 1.09 & 1.76\\
+\bottomrule\end{tabular}}\end{center}
+\begin{center}\scriptsize\resizebox{\textwidth}{!}{\begin{tabular}{lcccccccc}\toprule & \multicolumn{3}{c}{replay 0} & \multicolumn{3}{c}{replay 1} & \multicolumn{2}{c}{operational log}\\ family & 24 h [interval] & 6 h & op.\ error & 24 h [interval] & 6 h & op.\ error & 24 h & 6 h\\\midrule
+GRU, simulation error & 0.98 [0.89, 1.06] & 0.92 & 0.38 & 1.08 [1.03, 1.16] & 1.02 & 0.47 & 0.28 & 0.75\\
+Transformer, next-step & 1.31 [1.17, 1.50] & 1.10 & 0.50 & 1.48 [1.11, 1.93] & 1.22 & 0.78 & 0.48 & 1.06\\
+GRU, next-step + noise & 1.07 [1.00, 1.12] & 1.01 & 0.48 & 0.98 [0.89, 1.10] & 1.01 & 0.64 & 0.19 & 0.64\\
+Transformer, next-step + noise & 1.04 [0.93, 1.16] & 1.13 & 0.25 & 0.98 [0.89, 1.09] & 1.02 & 0.20 & 0.22 & 0.51\\
+ARX(12) & 1.19 [1.06, 1.32] & 1.19 & 0.34 & 1.28 [1.14, 1.41] & 1.26 & 0.41 & 0.90 & 1.17\\
+ARX(48) & 1.20 [1.08, 1.35] & 1.17 & 0.36 & 1.26 [1.12, 1.42] & 1.26 & 0.49 & 0.88 & 1.11\\
+PEM-SS(2) & 1.70 [1.53, 1.88] & 1.37 & 1.06 & 1.81 [1.63, 2.03] & 1.45 & 1.61 & 1.21 & 1.22\\
+\bottomrule\end{tabular}}\end{center}
+
+\paragraph{Supplementary Table 9 --- Weather-stratified replay: days permuted only within quartiles of the daily mean outdoor temperature, replayed open-loop.} Same weather, occupancy schedule, multiset of input values and within-day profile as the operational log. Per log: correlation of the replayed with the operational sequence; correlation of the modulation with the outdoor temperature and $R^2$ of the modulation on the logged drivers (outdoor temperature, irradiance, set-point, hour of day) against the operational log's; zone-temperature range and s.d.; fraction of replay samples inside the operational range; replay-to-operational ratio of input power in the 1--2-day and $>$2-day bands (7-day Welch segments; the daily line is within 4\% in every log). Per family: 24-h learned fraction with a hierarchical bootstrap interval over seeds and start states, the 6-h fraction, the twin's rollout error on the operational test weeks, and the operational-log values. The same two permutation seeds are used in every period; the spread between the two logs exceeds the spread between seeds and is not characterised by two draws.
+\emph{Period 1.} Operational log: corr$(u,T_{\mathrm{out}})$ -0.55, $R^2$ 0.69, zone temperature 20.1--23.4~$^\circ$C (s.d.\ 0.46~K); dithered logs: corr -0.30 to -0.27, $R^2$ 0.58--0.69; designed logs: $R^2$ 0.08--0.13; persistence on the operational weeks 0.66~K.
+\begin{center}\scriptsize\resizebox{\textwidth}{!}{\begin{tabular}{lcccccccc}\toprule log & corr.\ with op.\ $u$ & corr$(u,T_{\mathrm{out}})$ & $R^2$ & range ($^\circ$C) & s.d.\ (K) & in range & power 1--2 d & power $>$2 d\\\midrule
+replay 0 & 0.69 & -0.44 & 0.51 & 18.2--23.9 & 1.11 & 0.77 & 0.93 & 0.89\\
+replay 1 & 0.74 & -0.41 & 0.50 & 17.8--24.0 & 1.16 & 0.70 & 1.15 & 0.93\\
+\bottomrule\end{tabular}}\end{center}
+\begin{center}\scriptsize\resizebox{\textwidth}{!}{\begin{tabular}{lcccccccc}\toprule & \multicolumn{3}{c}{replay 0} & \multicolumn{3}{c}{replay 1} & \multicolumn{2}{c}{operational log}\\ family & 24 h [interval] & 6 h & op.\ error & 24 h [interval] & 6 h & op.\ error & 24 h & 6 h\\\midrule
+GRU, simulation error & 0.99 [0.92, 1.06] & 1.01 & 0.58 & 0.85 [0.78, 0.93] & 1.16 & 0.86 & 0.22 & 0.59\\
+Transformer, next-step & 0.97 [0.84, 1.12] & 0.91 & 0.70 & 1.27 [1.03, 1.57] & 1.06 & 0.72 & 0.78 & 0.73\\
+GRU, next-step + noise & 0.58 [0.43, 0.77] & 0.94 & 0.74 & 0.52 [0.29, 0.83] & 0.93 & 0.79 & 0.13 & 0.32\\
+Transformer, next-step + noise & 0.77 [0.68, 0.88] & 0.83 & 0.58 & 0.66 [0.57, 0.77] & 0.82 & 0.77 & 0.36 & 0.45\\
+ARX(12) & 1.25 [1.14, 1.39] & 1.20 & 0.67 & 1.38 [1.26, 1.52] & 1.24 & 0.69 & 1.55 & 1.37\\
+ARX(48) & 1.13 [1.04, 1.27] & 1.10 & 0.84 & 1.25 [1.16, 1.39] & 1.15 & 0.79 & 1.40 & 1.28\\
+PEM-SS(2) & 1.47 [1.33, 1.63] & 1.35 & 0.60 & 1.66 [1.53, 1.84] & 1.39 & 0.62 & 1.64 & 1.35\\
+\bottomrule\end{tabular}}\end{center}
+\emph{Period 2.} Operational log: corr$(u,T_{\mathrm{out}})$ -0.52, $R^2$ 0.56, zone temperature 20.2--24.3~$^\circ$C (s.d.\ 0.62~K); dithered logs: corr -0.36 to -0.29, $R^2$ 0.53--0.61; designed logs: $R^2$ 0.04--0.19; persistence on the operational weeks 0.65~K.
+\begin{center}\scriptsize\resizebox{\textwidth}{!}{\begin{tabular}{lcccccccc}\toprule log & corr.\ with op.\ $u$ & corr$(u,T_{\mathrm{out}})$ & $R^2$ & range ($^\circ$C) & s.d.\ (K) & in range & power 1--2 d & power $>$2 d\\\midrule
+replay 0 & 0.68 & -0.34 & 0.39 & 18.5--24.7 & 1.09 & 0.78 & 1.26 & 0.99\\
+replay 1 & 0.68 & -0.45 & 0.47 & 18.2--24.7 & 1.29 & 0.71 & 1.13 & 1.63\\
+\bottomrule\end{tabular}}\end{center}
+\begin{center}\scriptsize\resizebox{\textwidth}{!}{\begin{tabular}{lcccccccc}\toprule & \multicolumn{3}{c}{replay 0} & \multicolumn{3}{c}{replay 1} & \multicolumn{2}{c}{operational log}\\ family & 24 h [interval] & 6 h & op.\ error & 24 h [interval] & 6 h & op.\ error & 24 h & 6 h\\\midrule
+GRU, simulation error & 0.74 [0.68, 0.81] & 1.01 & 0.83 & 0.97 [0.91, 1.03] & 0.81 & 0.84 & 0.14 & 0.32\\
+Transformer, next-step & 0.91 [0.73, 1.14] & 0.76 & 0.90 & 0.84 [0.56, 1.17] & 0.70 & 0.75 & 0.63 & 0.51\\
+GRU, next-step + noise & 0.13 [0.08, 0.21] & 0.88 & 0.82 & 0.33 [0.13, 0.61] & 0.97 & 0.77 & 0.06 & 0.18\\
+Transformer, next-step + noise & 0.42 [0.30, 0.51] & 0.69 & 0.69 & 0.43 [0.30, 0.57] & 0.49 & 0.74 & 0.15 & 0.22\\
+ARX(12) & 1.08 [0.98, 1.18] & 1.09 & 1.13 & 1.19 [1.08, 1.30] & 1.11 & 1.23 & 1.14 & 1.15\\
+ARX(48) & 1.11 [1.01, 1.21] & 1.08 & 1.23 & 1.10 [1.00, 1.20] & 1.10 & 1.34 & 1.11 & 1.10\\
+PEM-SS(2) & 1.47 [1.34, 1.61] & 1.29 & 1.13 & 1.59 [1.45, 1.74] & 1.31 & 1.31 & 1.65 & 1.26\\
+\bottomrule\end{tabular}}\end{center}
+\emph{Period 3.} Operational log: corr$(u,T_{\mathrm{out}})$ -0.70, $R^2$ 0.67, zone temperature 20.1--23.7~$^\circ$C (s.d.\ 0.58~K); dithered logs: corr -0.43 to -0.42, $R^2$ 0.58--0.63; designed logs: $R^2$ 0.04--0.06; persistence on the operational weeks 0.51~K.
+\begin{center}\scriptsize\resizebox{\textwidth}{!}{\begin{tabular}{lcccccccc}\toprule log & corr.\ with op.\ $u$ & corr$(u,T_{\mathrm{out}})$ & $R^2$ & range ($^\circ$C) & s.d.\ (K) & in range & power 1--2 d & power $>$2 d\\\midrule
+replay 0 & 0.70 & -0.62 & 0.55 & 17.3--24.7 & 1.59 & 0.75 & 0.69 & 1.18\\
+replay 1 & 0.75 & -0.59 & 0.54 & 17.2--24.6 & 1.45 & 0.73 & 1.01 & 1.00\\
+\bottomrule\end{tabular}}\end{center}
+\begin{center}\scriptsize\resizebox{\textwidth}{!}{\begin{tabular}{lcccccccc}\toprule & \multicolumn{3}{c}{replay 0} & \multicolumn{3}{c}{replay 1} & \multicolumn{2}{c}{operational log}\\ family & 24 h [interval] & 6 h & op.\ error & 24 h [interval] & 6 h & op.\ error & 24 h & 6 h\\\midrule
+GRU, simulation error & 0.89 [0.78, 1.02] & 0.98 & 0.35 & 0.90 [0.81, 1.01] & 1.11 & 0.40 & 0.28 & 0.75\\
+Transformer, next-step & 1.04 [0.89, 1.20] & 1.05 & 0.38 & 1.19 [0.91, 1.48] & 1.20 & 0.40 & 0.48 & 1.06\\
+GRU, next-step + noise & 0.66 [0.41, 0.92] & 0.87 & 0.27 & 0.68 [0.38, 1.02] & 1.11 & 0.29 & 0.19 & 0.64\\
+Transformer, next-step + noise & 0.63 [0.43, 0.82] & 0.74 & 0.23 & 0.80 [0.55, 1.10] & 0.98 & 0.25 & 0.22 & 0.51\\
+ARX(12) & 1.10 [0.98, 1.23] & 1.18 & 0.43 & 1.21 [1.08, 1.36] & 1.17 & 0.38 & 0.90 & 1.17\\
+ARX(48) & 1.12 [1.00, 1.26] & 1.15 & 0.50 & 1.16 [1.05, 1.30] & 1.11 & 0.46 & 0.88 & 1.11\\
+PEM-SS(2) & 1.53 [1.37, 1.72] & 1.35 & 0.45 & 1.57 [1.40, 1.75] & 1.31 & 0.47 & 1.21 & 1.22\\
+\bottomrule\end{tabular}}\end{center}
+
+
+\section*{Supplementary Notes}
+\paragraph{Supplementary Note 1 --- Synthetic plant.} Linear estimator grid (432 cells); GRU scaling with $N$ (2e3--2e5) and hidden size (8--256); clean one-step rerun (no noise, 10,000 steps): ARX(20) 0.17 against GRU 0.96--0.98 and transformer 1.0 (one seed unstable) under pure feedback; law collapse over 28 cells (error against truth 1.13, against the linear law 0.20).
+
+\paragraph{Supplementary Note 2 --- Out-of-range evaluation (v0).} do-RMSE, conformal coverage (0--5\% for operational twins, 15--60\% for designed twins) and the open-loop planning results on designed schedules that exceed the operational range 74--80\% of the time; reported as extrapolation confounded with confounding, and obtained before the override-activation fault was fixed (the planning panel applied 48-h overrides from operational states, the operation that failed silently at some starts, and was not rerun).
+
+\paragraph{Supplementary Note 3 --- In-range-only errors and period details.} rmse restricted to in-range samples; in-range fractions of the designed test schedule 86/69/49\%; persistence per period; step truth 2.55, 2.97, 2.70~K (seven starts 48~h apart; the superseded query gave 1.84, 2.09, 0.98~K with null starts).
+
+\paragraph{Supplementary Note 4 --- Large models (GPU).} 256-unit simulation-error GRU 0.19--0.29 (operational, corrected truth) in all periods; 256-unit next-step GRU 0.25 (period~1 only); 4-layer transformer 0.72, 0.63 and 0.48.
+
+\paragraph{Supplementary Note 5 --- Capability failures.} Chronos-2 fine-tuning sweep on designed data (six recipes, $-0.16$ to 0.44~K of the 2.4-K v0 step); grey-box with free innovations gain (0.1--0.5 in every regime); next-step GRU instability.
+
+\paragraph{Supplementary Note 6 --- Inverse-controller test, full trajectories.} See Extended Data Fig.~1.
+\paragraph{Supplementary Note 7 --- Pancreas.} Capability control (25/30 pass; median relative error 0.14); learned fractions by loop, cohort and meal seed (reactive 0.42, bolused 0.10; Spearman 0.69 and 0.77 on the regenerated logs; 0.44, 0.11, 0.68, 0.75 in the first run); direct-method ARX comparator on the regenerated v1 logs (\pancreasarxnumbers); dosing scenario versions and per-patient outcomes (regenerated logs: reference 0 of 25 severe, reactive-loop twins 12 of 23, meal-bolused 15 of 22, instrumented 3 of 23 and 3 of 23); steady-state glucose range (169--586~mg/dL).
+
+\paragraph{Supplementary Note 8 --- MPC details.} Both targets; energy; out-of-range action fractions; ensemble spread along the plan.
+
+\paragraph{Supplementary Note 9 --- Upstream and downstream what-ifs (withdrawn).} The comparison of set-point and actuator what-ifs was obtained with the faulty override activation and was not rerun; no claim rests on it.
+
+\paragraph{Supplementary Note 10 --- Commercial building (v0 protocol only).} Operational twins 2--3$\times$ persistence out of range; GRU over-estimates the valve effect in a schedule-driven loop; not evaluated under the v1 protocol.
+
+
+\paragraph{Supplementary Note 11 --- Instrumental corrections.} Control-function twins on dithered logs (neutral to slightly positive); the two-stage estimator (forbidden regression) and its harm; synthetic IV-GRU plateau at 0.30.
+
+
+\paragraph{Supplementary Note 12 --- Extended results.} The full account of the Results, with every comparator, horizon and control; the main text condenses it.
+\paragraph{Setting and protocol.} Three systems whose exact interventional answer is computable: a synthetic two-node thermal plant under PI control with a hidden heat disturbance; the UVA/Padova-class type-1 diabetes simulator with thirty virtual patients (adult, adolescent, child cohorts) under a hybrid closed-loop insulin controller with unlogged meals; and the IBPSA BOPTEST residential heat-pump emulator under its embedded controller with unlogged occupancy, over three four-week heating-season periods. In the building every model is trained on an \emph{operational} log, on three logs in which a logged random offset of $\pm2$~K was added to the set-point (\emph{dithered}; same weather and occupancy, different offsets), and on \emph{designed} logs in which the actuator followed a random schedule, and is scored on (i) its response to a step in heat-pump modulation from seven operational start states 48~h apart, relative to the emulator's exact response at 3--48~h (\emph{learned fraction}; the 24-h value is the pre-stated primary, and because the $+0.3$ step's intervention arm leaves the training-log temperature range for part of the first day in two periods, a $+0.1$ step from the same states, added after the third internal review round, is reported alongside); (ii) its rollout error on the operational test weeks (\emph{operational error}, what practitioners validate on); (iii) its rollout error on a designed schedule built around the test weeks' operating level, restricted to samples inside the training range (\emph{in-range error}); and (iv) the coverage, on in-range samples, of split-conformal 90\% intervals calibrated on operational days with matched weather. Neural families are trained with five seeds; intervals are hierarchical bootstraps over seeds and start states. A family enters the headline comparison if, trained on designed data, it recovers the step response to within $\pm50\%$; the protocol, its pre-stated predictions and every change made after seeing data are in Methods and Supplementary Information.
+
+
+\paragraph{Both estimators are biased by the operational regime; the simulation-error recipe by far the most.} Table~1 and Fig.~1 give the learned fraction by family, training regime and period. A GRU trained by simulation error on the operational log learns $0.22$ [95\% CI 0.16--0.30], $0.14$ [0.08--0.20] and $0.28$ [0.20--0.41] of the true 24-h heating effect in the three periods; a 256-unit GRU learns 0.19--0.29; a next-step GRU or transformer trained with the input-noise injection that stabilises rollouts learns 0.06--0.36. These are the twins with the lowest error on the operational test weeks in every period (0.11--0.49~K; Fig.~1), which is why operational validation selects them. The shortfall grows with horizon in every period and is not an artefact of the step leaving the operating range: the same simulation-error twins learn 0.59 [0.44--0.79], 0.32 [0.24--0.39] and 0.75 [0.47--1.12] of the effect at 6~h (a horizon at which every arm is inside the training range 95--100\% of the time), 0.40, 0.33 and 0.59 at 12~h and 0.14, 0.10 and 0.19 at 48~h, i.e.\ in two of three periods they reproduce most of the fast air response and in all three they lose the slow accumulation that the controller cancels; normalised by the same architecture's designed-data response at the same horizon the ratio falls from 0.65--0.76 at 6~h to 0.21--0.22 at 24~h in periods~1 and~3 and from 0.33 to 0.14 in period~2, whereas ARX(48) stays at 1.0--1.4 through 24~h in periods~1 and~2 and decays in period~3 (1.00 at 6~h to 0.55 at 48~h), where part of the slow-mode shortfall is shared by every family and is therefore not the controller's doing (Supplementary Table~7); and a $+0.1$ step from the same start states, whose intervention arm stays inside the training range for 58, 57 and 81\% of its first day (the $+0.3$ arm, 33, 27 and 62\%; even the base arm only 71--80\%, so tight is the operating range; over the first 6~h every arm is in range 95--100\% of the time), gives 0.26 [0.17--0.36], 0.15 [0.09--0.19] and 0.36 [0.22--0.57] at 24~h (paired difference from the $+0.3$ fraction over the seven starts $+0.04$, $0.00$ and $+0.10$) and 0.60, 0.37 and 0.88 at 6~h: the same fraction (Supplementary Table~6). The same architectures trained on designed data recover the 24-h effect to 0.50--1.28 (Supplementary Table~1 applies both pre-stated capability clauses to every family: the noise-injected transformer fails the $\pm50\%$ clause in period~2 by 0.001, and the simulation-error GRU fails the persistence clause in period~1 because the designed logs lie mostly outside the operating range there, so that periods~2 and~3, 0.14 and 0.28, carry the headline; no range quoted here depends on either cell). The classical direct method on the same logs estimates the effect at 0.88--1.65 of the truth, in a direction that depends on the period: ARX models of order 12 and 48 learn 1.55/1.40, 1.14/1.11 and 0.90/0.88 (orders 2 and 24: 1.16--1.62 in period~1, 0.94--0.98 in period~3), ARX(48) being 1.34, 1.01 and 0.82 relative to its own designed-data estimate, and a second-order innovations-form state-space model 1.64, 1.65 and 1.21---of which about 1.4 is structural, since it over-estimates on designed data too (1.38--1.47)---with operational errors of 0.30--1.31~K. Within the same architecture the training device decides (Fig.~2): the clean next-step transformer learns $0.78$ [0.65--0.94], $0.63$ [0.44--0.87] and $0.48$ [0.40--0.61] (0.72, 0.63, 0.48 with four layers; 0.71 with the recipe selected on designed data), the same transformer with noise injection 0.36, 0.15 and 0.22; the clean next-step GRU is unstable rather than informative (2.2--2.8 with the default recipe, whose rollouts are worse than persistence; 0.28--3.75 across a sixteen-run recipe sweep; 1.22 with the recipe selected on designed data; 0.25 [0.13--0.43] at 256 units, where its operational error, 0.44~K, matches the simulation-error GRU's 0.49~K), and the clean transformer is robust to the recipe (0.49--1.10 across the same sweep, fifteen of sixteen runs above the noise-injected transformer's interval and one at its edge; Supplementary Table~2). Whatever buys operational accuracy---the simulation-error loss, input-noise injection or, for the next-step GRU, capacity---buys the co-movement; the clean transformer is the one neural family that keeps about half or more of the 24-h effect, and pays for it in operational error (0.29--0.66~K). A sign-constrained grey-box model with a free innovations gain learns 0.23--0.51 and fails its designed-data control (0.08--0.49); fitted instead by sign-constrained simulation error it learns 1.10, 0.69 and 0.25 against 1.14--1.78 on designed data (0.65, 0.57 and 0.16 of its own designed-data estimate), and its operational fits put the slab capacitance two orders of magnitude above the designed-data value: the slow mode, which the controller cancels, is unidentifiable from operation, the classical informativity diagnosis in physical units; neither structured variant is a clean comparator for this building. In the synthetic plant under pure feedback a 20th-order ARX reaches a relative error of 0.17 on a log from which simulation-error GRUs reach 1.03--1.27 and clean next-step GRUs and transformers 0.96--1.0, with no change between $2{\cdot}10^3$ and $2{\cdot}10^5$ samples or between 8 and 256 hidden units; with an anticipating controller ($F\neq0$) the ARX fails as well (relative error about 1.0), as the theory of the direct method predicts.
+
+\paragraph{What the simulation-error twin learns, and why the validation stack does not see it.} A simulator trained by simulation error converges to $\E[y\mid u,y_{\mathrm{hist}},x]=\mathcal G[u]+\E[v\mid u,y_{\mathrm{hist}},x]$, the true response plus the disturbance the controller reveals through the input (Methods, equation~(1)); under pure feedback its linear limit is the negative inverse controller. On the building this is testable because the embedded controller is known: fitted from the operational log ($R^2>0.99$), its inverse responds to a $+0.3$ modulation step with $-0.19$, $-0.85$ and $-0.59$~K at 24~h, the truth with $+2.55$, $+2.97$ and $+2.70$~K, and the simulation-error GRU with $+0.56$, $+0.43$ and $+0.76$~K: a quarter to two-fifths of the way from the controller's inverse to the plant (0.27, 0.34, 0.41). The outcome of the test is therefore that no twin reproduces the controller's inverse---every learned response is positive---and that, with integral action in the loop, the inverse itself is small at 24~h, so the discriminating horizon is the first hours, where the twins learn 0.3--0.75 of the effect (Extended Data Fig.~1 gives the full trajectories). The linear law with the actuator's coherence with the set-point schedule (0.64, 0.53, 0.50 in a 3--24-h band chosen after the fact) predicts $+1.58$, $+1.17$ and $+1.07$~K, above the GRU; since the schedule is synchronous with occupancy it is not the exogenous reference the law requires, and this row is an upper bound, not a test. On the dithered logs, where the logged offset is exogenous, the law's 24-h prediction (0.45--0.74) and the simulation-error GRU's 24-h fraction (0.51--0.87) agree within 0.1 in six of eleven logs and the GRU exceeds the law by 0.2--0.3 in every period-3 log; across the eleven logs the law predicts the fraction no better than their mean does (Supplementary Table~5). The scalar law is therefore a description of the 24-h order of magnitude, not a validated formula, and it says nothing about the horizon profile: the mixture with the controller's inverse would put the twin's shortfall in the first hours, where the inverse is largest, whereas the shortfall grows with horizon. The profile is instead the general identity's signature of a missing slow mode: the controller cancels slow temperature excursions, so in the log a sustained rise in modulation is accompanied by a cold disturbance rather than by a rising temperature, and the twin learns that the sustained effect is small while the response over the first hours, which the controller has not yet cancelled, is learned nearly in full (0.94--1.17 at 6~h on the dithered logs). The test that separates this co-movement from the input's excitation is an open-loop \emph{replay} of the operational input with its days permuted: the operational modulation sequence, cut into its 28 days and randomly permuted, is replayed open-loop in the emulator over the same weeks, which keeps the weather, the occupancy schedule, the multiset of input values and the within-day profile of the input (correlation with the operational sequence 0.46--0.47, 0.42--0.43 and 0.19--0.34 in the three periods; the daily spectral line within 4\%, the 1--2-day band at 0.66--1.09 of its operational power, the longer-period band at 0.84--2.1 and the sub-daily bands at 1.0--1.7) and removes the input's alignment with the disturbance the controller was reacting to at periods longer than a day, while preserving its within-day alignment with the occupancy schedule. Twins trained on two such logs per period and scored on the same step from operational start states recover the 24-h effect: the simulation-error GRU 0.73--1.21 against 0.22, 0.14 and 0.28 on the operational logs, the noise-injected GRU and transformer 0.54--1.07 against 0.06--0.36, and the clean transformer 0.96--1.60; the direct methods, which the operational log did not deprive of the effect, sit 0.1--0.3 above their designed-data estimates (ARX 1.00--1.29, state-space 1.54--1.81), consistent with the within-day alignment the permutation preserves. The replay differs from operation in one respect the test does not remove: its zone temperature spans 17--28, 16--30 and 13--32~$^\circ$C against 20--24 (s.d.\ 1.8--5.3~K against 0.5--0.6), so the step's intervention arm lies inside the replay twins' training support and outside the operational twins'. That is answered at 6~h, where every arm is in range for both and the replay twins learn 0.88--1.06 (simulation-error GRU) and 0.67--1.27 (noise-injected families) against 0.32--0.75 and 0.18--0.64; in period~1, moreover, the replay has no more slow excitation than operation (0.84--0.99 of the power beyond two days) and the recovery is there. The replay twins forecast operation worse than persistence (0.9--1.2~K in periods~1--2), which is the trade-off of Fig.~1 seen from the other side (Supplementary Table~8). The whole-day permutation also removes the modulation's correlation with the logged outdoor temperature ($-0.52$ to $-0.70$ in operation, about $-0.1$ in the replay) and widens the output range four- to nine-fold, both of which make a log more informative in the classical sense; a \emph{weather-stratified} replay, in which days are permuted only within quartiles of the daily mean outdoor temperature, keeps that correlation ($-0.34$ to $-0.62$) and a nearly operational temperature range (17--25 against 20--24~$^\circ$C), and still restores the effect: the simulation-error GRU learns 0.74--0.99 at 24~h and 0.81--1.16 at 6~h, the clean transformer 0.84--1.27, the noise-injected transformer 0.42--0.80 and the noise-injected GRU 0.13--0.68 (partially in period~2), while forecasting operation at 0.35--0.86~K, close to the operational twins' accuracy (Supplementary Table~9). The replay also removes feedback as such; that the direct methods with a noise model recover 0.9--1.4 from the operational log itself shows the loop is informative for a predictor, so what the operational log withholds from the simulation-error and noise-injected families is neither excitation in the spectral sense nor independence from the logged weather but the independence of the input from the unlogged disturbance---the controller's co-movement. Three consequences follow. The error is a bias of the population optimum, flat in data and capacity (Table~1; synthetic sweeps). It is invisible to operational validation: the twins with the lowest operational error have the lowest learned fraction, and in the synthetic plant the error exceeds the ensemble spread by 7--80$\times$. And predictive intervals calibrated on operation do not transfer: on in-range interventional samples, 90\% conformal intervals of operational-data simulation-error GRU twins cover 48, 81 and 40\% in the 6--24-h horizon band (transformer 80, 98 and 56\%; ARX(48) 90, 98 and 64\%; Supplementary Table~3 gives every band), against 85--98\% on operation for the GRU (the linear models' operational coverage is itself 46--99\%); part of the shortfall in period~3 is shared by every family and is therefore not the controller's doing. The out-of-range version of this experiment, which gave 0--5\% coverage in an earlier draft, confounded extrapolation with confounding and is reported in Supplementary Note~2 as such.
+
+\paragraph{Decisions.} In the synthetic plant, 300-step input schedules optimised through operational-data simulation twins to reach a 3-K target are worse than doing nothing in 29 of 36 regime--seed cells (22 of 24 for the next-step recipes) and worse than the designed-data twins' plans in all cells, while the twins believe their plans succeed. In the building, with receding-horizon re-planning every 2~h from the true state through bootstrap ensembles of five twins trained on the period-1 logs of the first study version (Fig.~4a), schedules from the operational twin track a set-point change inside the operating range (21.0 to 21.8~$^\circ$C) to $0.66\pm0.28$~K (s.d.\ over five starts) against 0.47 for the building's own controller and 0.59 for a designed-data twin under the same planner, and to 0.55~K with a pessimism penalty of 10, and a change that leaves the range (to 22.5~$^\circ$C) to $1.41\pm0.46$~K against 0.53 for the controller and 0.58 for the designed-data twin; a pessimistic penalty on ensemble disagreement \citep{yu2020mopo} reduces the out-of-range damage in 4 of 5 starts (0.72~K at $\lambda=10$; paired per-start improvement 0.68~K, s.d.\ 0.80, $p=0.13$, suggestive rather than established) by keeping the plan in the controller's own territory (energy 0.57 to 0.45, out-of-range actions 48 to 31\%), which is what it is designed to do; in range the paired improvement is 0.10~K (s.d.\ 0.17), within noise. It does not separate bias from variance (the biased twins' ensembles disagree by 0.28~K against 0.21 for designed ones) and it degrades the dithered twin (0.32 to 0.57~K), which at $\lambda=0$ is the best controller we built (0.32 and 0.30~K against 0.53 and 0.47 for the embedded controller; paired per-start difference from the embedded controller $-0.21$~K, s.d.\ 0.17, and the penalty degrades it by 0.26~K, s.d.\ 0.09, in every start). The twins in this experiment were trained on the period-1 logs of the first study version (whose set-point reference was later corrected) and their learned fraction under the corrected truth is not known; the operational twin's plans use more heating than the building's controller (summed modulation 0.57 against 0.42; 0.45 under pessimism), which is the direction the sign of its bias predicts. In the diabetes simulator, a correction-bolus calculator derived from each twin and applied to the true patient at a steady hyperglycaemia (Fig.~4b; 25 patients passing the capability control) gives, from the true effect at the operating point, 2.8~U and no hypoglycaemia in 25 patients; from twins of the reactive pump loop, 6.9~U and glucose below 54~mg/dL in 12 of 23 patients (23 and 22 after excluding meal-seed-0 cells with more than 50\% hypoglycaemia); from twins of the meal-bolused loop, no dose at all in 6 of 22 and severe hypoglycaemia in 15 of 22 (both $p<0.001$, one-sided Fisher's exact test against the reference; the steady state reached ranged from 169 to 586~mg/dL across patients; the first run of this scenario, on logs that were not saved, gave 11 of 22 severe in the reactive loop and, in the meal-bolused loop, 7 of 23 without a dose and 15 of 23 severe).
+
+\paragraph{What helps, and where the direct method stops.} A logged set-point dither of $\pm2$~K, which costs 0.9--1.0~K rms of zone temperature and 15--28\% of summed heat-pump modulation (our proxy for heating energy) over the training month on this building, moves the 24-h learned fraction to 0.55--0.87 for the simulation-error GRU (0.94--1.17 at 6~h), 0.45--0.81 for the clean transformer, 0.22--0.70 for the noise-injected families, 0.69--0.82 for ARX(12), 0.76--0.87 for ARX(48) and 0.94--1.12 for the state-space model, in every period and every dithered log (Fig.~3); the dithered-twin ensemble is the best MPC controller we built. The dose--response in period~1 is monotone: $\pm0.5$~K costs 0.3~K and 4\% of energy and already moves the simulation-error GRU to 0.51, $\pm1$~K 0.6~K and 12\% for 0.56 (Supplementary Table~4). In the diabetes simulator the same device with a two-stage instrumental estimator \citep{angrist2009} reduces the overdoses (3 of 23 severe in either loop, $p\approx0.1$). Beyond the dither, instrumental corrections add little: a control-function estimator on the dithered building logs (first study version, period~1) is neutral to slightly positive on the learned effect and neutral on planning, and the two-stage estimator that an earlier draft reported as harmful was a forbidden regression (Supplementary Information). The direct method itself has a boundary: on the pump logs of the diabetes simulator, where the patient is nonlinear and meals are unlogged (all pancreas results in this version are from logs regenerated with a fixed seed and saved; the first run, on unsaved logs, gave twin fractions 0.44 and 0.11), ARX models of order 6--24 over-estimate the 4-h insulin effect 2.1--6.8$\times$ in the reactive loop (per-patient medians over three meal seeds, 23 patients; 5--10 of 68 cells diverged in free simulation and are excluded, so this is a lower bound on the instability; the three seeds are near-replicates, so the patient is the unit)---not a model-class failure alone, since on designed open-loop logs of the same patients ARX(24) recovers 0.90 [IQR 0.74--1.04] with no divergence (ARX(12) 0.56, ARX(6) 0.20), but the mis-specified linear direct model under feedback, whose bias we do not separate further---and in the meal-bolused loop, where the controller acts on meals the log does not contain, estimate it at $-0.05$ to $-0.01$ of the truth, i.e.\ as nothing, with a positive sign in 13--16 of 23 patients, as the theory of the direct method under anticipating control predicts (\pancreasarx). The linear simulation-error twin on the same logs learns 0.42 and 0.10 of the effect (Spearman correlation with the truth across patients 0.69 and 0.77), with a positive 2-h effect---``insulin raises glucose''---in every meal-bolused cell.
+
+\paragraph{What did not help.} Chronos-2 \citep{chronos2}, a covariate-aware time-series foundation model given the actuator and the weather as known future covariates, forecasts operation to 0.15~K after full fine-tuning on the operational log but learns a 24-h heating response of 0.02~K; fine-tuned on \emph{designed} data with six combinations of learning rate and steps (one seed each; the two highest-rate runs degraded to 1.45--1.50~K against persistence 1.70) it learns $-0.16$ to 0.44~K of the first study version's 2.4-K step effect while forecasting the designed schedule to 0.73~K, so within our budget it predicts the designed trajectory from weather and context rather than from the actuator, fails the capability criterion, and its operational result is not evidence about confounding.
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+\end{document}

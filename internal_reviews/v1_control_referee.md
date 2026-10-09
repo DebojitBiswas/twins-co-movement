@@ -1,0 +1,12 @@
+# Round 2 — control referee (2026-10-08). MAJOR REVISION again. Most damaging: MAJOR 1/2 (comparator moves 40–60 % with excitation; PEM fails ±50 % in 2/3 periods; Fig A shows classical dominating both axes in P2/P3).
+MAJOR 1 comparator biased too (regime-dependent; PEM fails V2; ARX P3 under-estimates; no decision cost measured; designed-data over-estimation 1.3–1.4 for PEM → separate structural bias) → "both biased, differently; excitation repairs both"; report operational/designed ratios; MPC with ARX/PEM; F≠0 limitation (d=0.8 ARX inf; pancreas bolus).
+MAJOR 2 Fig A x-axis = in-range designed error on which ARX beats sim-GRU both axes → plot pred or rewrite.
+MAJOR 3 "excitation-dependent transformer" post hoc, n=3, no measure → quantify or demote.
+MAJOR 4 capability criterion lost its second clause (T-in < persistence) unregistered; sim-GRU fails it in P1 (1.27 vs 1.10) → restore with addendum; pass/fail table; designed-normalised column.
+MAJOR 5 step query within range only at start (0.7 hold 4.7× ū in P2) → in-range fractions of step trajectories; scaled step levels; in-range coverage.
+MAJOR 6 MPC headline uses out-of-range target; fair factor vs designed-twin MPC (2.4×); spread 0.28 vs 0.21 is +33 %, n=5; retreat claim needs counterfactual → lead with in-range; normalise; CIs.
+MAJOR 7 grey-box mis-specified (free K; CTSM uses Riccati K; practice uses sign-constrained OE) → fit OE 2R2C and noise-covariance PEM; drop "did not help" until then.
+MAJOR 8 pancreas has no classical comparator; bolused loop is F≠0 where direct method is biased too; "halves overdoses" vs unchanged fraction → explain; p vs which.
+MAJOR 9 "learns the controller" never tested on the building → compute −1/Ĉ from the known embedded controller and compare with learned steps per period.
+MINOR 1–18: ranges (0.18–0.37; cost/benefit same amplitude; 20–75 %; "moves" not "raises"; grey designed 0.48/0.07/0.20; synthetic d=0 vs d=0.8; cite DART/scheduled sampling; dangling eq (1)/Fig 1c/Fig 3; overshoot integral caveat; Twin Houses one-of-two; "constructed to stay inside" vs 53 %; ARX out-of-range fails in P2/P3; ARX/PEM in-range coverage 0.49–0.90 unreported; title; two-sided p + CIs; MPC dithered-twin provenance; Chronos −0.16).
+DEMANDS: classical comparator through MPC/conformal/pancreas; quantify direct-method bias; pre-stated orders or all orders; −1/Ĉ test; excitation statistic; step in-range evidence; correct grey-box; in-range MPC headline; numbers + audit.
