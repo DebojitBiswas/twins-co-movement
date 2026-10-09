@@ -2,6 +2,8 @@
 
 Code, generated data and result files for the paper (Debojit Biswas, Florida Atlantic University, dbiswas2015@fau.edu).
 
+Repository: https://github.com/DebojitBiswas/twins-co-movement
+
 ## Layout
 - `paper/` — LaTeX sources of the main text (`main.tex`) and Supplementary Information (`supplement.tex`), figures, bibliography.
 - `code/` — every script used, plus the pre-registered protocol (`protocol_v1_buildings.md`), the theory notes, the quality checklist and the dated project log (`PLAN.md`, which records every result and every change made after seeing data).
